@@ -29,6 +29,12 @@
     $('#messages').empty().append('Now chatting with ' + conn.peer);
     conn.on('data', function(data){
         $('#messages').append('<br>' + conn.peer + ':<br>' + data);
+
+        if (data + "" == "") {
+            clearCanvas();
+            return;
+        }
+
         writeByMsg(data + "");
     });
     conn.on('close', function(err){ alert(conn.peer + ' has left the chat.') });
@@ -48,6 +54,11 @@
       conn.send(msg);
       $('#messages').append('<br>You:<br>' + msg);
       $('#text').val('');
+
+      if (msg + "" == "") {
+          clearCanvas();
+      }
+
     });
     // Show browser version
     $('#browsers').text(navigator.userAgent);
