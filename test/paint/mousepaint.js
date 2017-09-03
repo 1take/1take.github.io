@@ -17,7 +17,7 @@ function writeByMsg(msg) {
         var endX = points[i], endY = points[i + 1];
         ctx.moveTo(startX, startY);
         ctx.lineTo(endX, endY);
-        ctx.strokeStyle = "red";
+        ctx.strokeStyle = "blue";
         ctx.stroke();
     }
 }
