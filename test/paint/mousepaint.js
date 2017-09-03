@@ -63,19 +63,19 @@ function clearCanvas() {
             */
 
             //3.èÓïÒÇinfoÇ…èoóÕ
-            document.getElementById("info").innerHTML =
-        " clientX = " + Math.floor(e.clientX) + "px" +
-        " clientY = " + Math.floor(e.clientY) + "px" + '<br>' +
-        " rect.left = " + Math.floor(rect.left) + "px" +
-            " rect.top = " + Math.floor(rect.top) + "px" + '<br><br>' +
+        //    document.getElementById("info").innerHTML =
+        //" clientX = " + Math.floor(e.clientX) + "px" +
+        //" clientY = " + Math.floor(e.clientY) + "px" + '<br>' +
+        //" rect.left = " + Math.floor(rect.left) + "px" +
+        //    " rect.top = " + Math.floor(rect.top) + "px" + '<br><br>' +
 
-        " pageX = " + Math.floor(e.pageX) + "px" +
-        " pageY = " + Math.floor(e.pageY) + "px" + '<br>' +
-        ' offsetLeft = ' + Math.floor(canvas.offsetLeft) + "px" +
-        ' offsetTop = ' + Math.floor(canvas.offsetTop) + "px" + '<br><br>' +
+        //" pageX = " + Math.floor(e.pageX) + "px" +
+        //" pageY = " + Math.floor(e.pageY) + "px" + '<br>' +
+        //' offsetLeft = ' + Math.floor(canvas.offsetLeft) + "px" +
+        //' offsetTop = ' + Math.floor(canvas.offsetTop) + "px" + '<br><br>' +
 
-            " canvas x position = " + Math.floor(mouse.x) + "px" +
-            " canvas y position = " + Math.floor(mouse.y) + "px" + '<br>';
+        //    " canvas x position = " + Math.floor(mouse.x) + "px" +
+        //    " canvas y position = " + Math.floor(mouse.y) + "px" + '<br>';
 
             //4.isDrawÇ™trueÇÃÇ∆Ç´ï`âÊ
             if (mouse.isDrawing) {
@@ -107,7 +107,7 @@ function clearCanvas() {
             mouse.isDrawing = false;
 
             var msg = mouseStroke.join(" ");
-            $('#messages').append('<br>Your Mouse:<br>' + msg);
+//            $('#messages').append('<br>Your Mouse:<br>' + msg);
             conn.send(msg);
 
         });
@@ -116,7 +116,7 @@ function clearCanvas() {
             mouse.isDrawing = false;
 
             var msg = mouseStroke.join(" ");
-            $('#messages').append('<br>Your Mouse:<br>' + msg);
+//            $('#messages').append('<br>Your Mouse:<br>' + msg);
             conn.send(msg);
 
         });
