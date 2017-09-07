@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
 <meta http-equiv="Content-Language" content="en-us"> 
 
-    <style>
+    <style>    
         #mycanvas {
             border: 1px solid #333;
         }
@@ -62,12 +62,17 @@
     });
     // Show browser version
     $('#browsers').text(navigator.userAgent);
+
+    document.body.addEventListener("click", function() {
+      if (document.body.webkitRequestFullScreen)
+        document.body.webkitRequestFullScreen();
+    });
   });
 
 </script>
 </head> 
  
-<body> 
+<body style="background-color: white"> 
 
   Your PeerJS id is : <span id="pid"></span><br><br>
   Connect to peer: <input type="text" id="rid" placeholder="Someone else's id">
