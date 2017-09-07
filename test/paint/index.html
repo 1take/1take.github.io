@@ -70,7 +70,9 @@
     // Show browser version
     $('#browsers').text(navigator.userAgent);
 
-    document.getElementById('mycanvasdiv').addEventListener("click", function() {
+    document.getElementById('mycanvasdiv').addEventListener("click", function(e) {
+        e.preventDefault();
+
         if (!inFullScreen)
           document.getElementById('mycanvasdiv').webkitRequestFullScreen();
         else
