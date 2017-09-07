@@ -5,16 +5,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
 <meta http-equiv="Content-Language" content="en-us"> 
 
-    <style>    
+    <style>
         #mycanvas {
             border: 1px solid #333;
         }
+        *: -webkit-full-screen {
+            background-color: rgba(255,255,255,255);
+            z-index: 1;
+        }
+
     </style>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script type="text/javascript" src="https://skyway.io/dist/0.3/peer.js"></script>
 <script>
-  
+
+  var inFullScreen = false;
+
   var conn;
   // Connect to PeerJS, have server assign an ID instead of providing one
   var peer = new Peer({key: '1bc7f2f1-3464-475b-8d1a-783c69fb0ae0', debug: true});
@@ -63,25 +70,32 @@
     // Show browser version
     $('#browsers').text(navigator.userAgent);
 
-    document.body.addEventListener("click", function() {
-      if (document.body.webkitRequestFullScreen)
-        document.body.webkitRequestFullScreen();
+    document.getElementById('mycanvasdiv').addEventListener("click", function() {
+        if (!inFullScreen)
+          document.getElementById('mycanvasdiv').webkitRequestFullScreen();
+        else
+          document.webkitCancelFullScreen();
+
+        inFullScreen = !inFullScreen;
     });
   });
 
 </script>
 </head> 
  
-<body style="background-color: white"> 
+<body> 
 
   Your PeerJS id is : <span id="pid"></span><br><br>
   Connect to peer: <input type="text" id="rid" placeholder="Someone else's id">
                    <input type="button" value="Connect" id="connect"><br><br>
   
-  
+    <div id="mycanvasdiv">
     <canvas width="640" height="480" id="mycanvas">
         Canvasに対応したブラウザを用意して下さい。
     </canvas>
+    <br/>
+    Toggle Fullscreen
+    </div>
     <div id="info"></div>
 
     <div id="chat_area" style="display: none;">
