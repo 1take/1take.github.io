@@ -115,19 +115,30 @@ function clearCanvas() {
         canvas.addEventListener("mousemove", function (e) {
             move(e);
         });
+        canvas.addEventListener("touchmove", function (e) {
+            move(e);
+        });
 
-        //5.マウスを押したら、描画OK(myDrawをtrue)
         canvas.addEventListener("mousedown", function (e) {
             begin(e);
         });
+        canvas.addEventListener("touchstart", function (e) {
+            begin(e);
+        });
 
-        //6.マウスを上げたら、描画禁止(myDrawをfalse)
         canvas.addEventListener("mouseup", function (e) {
+            end(e);
+        });
+        canvas.addEventListener("touchend", function (e) {
             end(e);
         });
 
         canvas.addEventListener('mouseleave', function (e) {
             cancel(e);
         });
+        canvas.addEventListener('touchcancel', function (e) {
+            cancel(e);
+        });
+
     });
 })();
