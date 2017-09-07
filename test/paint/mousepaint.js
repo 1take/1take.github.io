@@ -42,8 +42,6 @@ function clearCanvas() {
 
         //マウスの座標を取得
         var mouse = {
-            startX: 0,
-            startY: 0,
             x: 0,
             y: 0,
             color: "black",
@@ -54,8 +52,16 @@ function clearCanvas() {
         function move(e) {
             //2.マウスが動いたら座標値を取得
             var rect = e.target.getBoundingClientRect();
-            mouse.x = e.clientX - rect.left - borderWidth;
-            mouse.y = e.clientY - rect.top - borderWidth;
+
+            var cx, cy, ev;
+
+            if (e.type.indexOf('touch') != -1)
+                ev = e.touches[0];
+            else
+                ev = e;
+
+            mouse.x = ev.clientX - rect.left - borderWidth;
+            mouse.y = ev.clientY - rect.top - borderWidth;
             /*
             pageX[Y], offsetLeft[Top]を使う場合
             mouse.x = e.pageX - canvas.offsetLeft - borderWidth;
@@ -83,13 +89,17 @@ function clearCanvas() {
                 mouseStroke.push(mouse.x);
                 mouseStroke.push(mouse.y);
 
+                if (mouseStroke.length == 0) return;
+
+                var max = mouseStroke.length - 1; 
+                var curX = mouseStroke[max - 1], curY = mouseStroke[max];
+                var prevX = mouseStroke[max - 3], prevY = mouseStroke[max - 2];
+ 
                 ctx.beginPath();
-                ctx.moveTo(mouse.startX, mouse.startY);
-                ctx.lineTo(mouse.x, mouse.y);
+                ctx.moveTo(prevX, prevY);
+                ctx.lineTo(curX, curY);
                 ctx.strokeStyle = mouse.color;
                 ctx.stroke();
-                mouse.startX = mouse.x;
-                mouse.startY = mouse.y;
             }
         };
 
@@ -97,8 +107,6 @@ function clearCanvas() {
             mouseStroke = [];
 
             mouse.isDrawing = true;
-            mouse.startX = mouse.x;
-            mouse.startY = mouse.y;            
         };
 
         function end(e) {
