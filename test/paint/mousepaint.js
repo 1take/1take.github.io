@@ -121,6 +121,7 @@ function clearCanvas() {
             prevent(move, e);
         });
         canvas.addEventListener("touchmove", function (e) {
+            $('#messages').append('<br>Event:<br>' + "move");
             prevent(move, e);
         });
 
@@ -128,6 +129,7 @@ function clearCanvas() {
             prevent(start, e);
         });
         canvas.addEventListener("touchstart", function (e) {
+            $('#messages').append('<br>Event:<br>' + "start");
             prevent(start, e);
         });
 
