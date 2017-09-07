@@ -93,7 +93,7 @@ function clearCanvas() {
             }
         };
 
-        function begin(e) {
+        function start(e) {
             mouseStroke = [];
 
             mouse.isDrawing = true;
@@ -112,32 +112,37 @@ function clearCanvas() {
             end(e);
         };
 
+        function prevent(f, e) {
+            e.preventDefault();
+            f(e);
+        }
+
         canvas.addEventListener("mousemove", function (e) {
-            move(e);
+            prevent(move, e);
         });
         canvas.addEventListener("touchmove", function (e) {
-            move(e);
+            prevent(move, e);
         });
 
         canvas.addEventListener("mousedown", function (e) {
-            begin(e);
+            prevent(start, e);
         });
         canvas.addEventListener("touchstart", function (e) {
-            begin(e);
+            prevent(start, e);
         });
 
         canvas.addEventListener("mouseup", function (e) {
-            end(e);
+            prevent(end, e);
         });
         canvas.addEventListener("touchend", function (e) {
-            end(e);
+            prevent(end, e);
         });
 
         canvas.addEventListener('mouseleave', function (e) {
-            cancel(e);
+            prevent(cancel, e);
         });
         canvas.addEventListener('touchcancel', function (e) {
-            cancel(e);
+            prevent(cancel, e);
         });
 
     });
