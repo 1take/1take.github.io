@@ -1,4 +1,4 @@
-﻿<!DOCTYPE HTML> 
+<!DOCTYPE HTML> 
 <html lang="en"> 
 <head>
 <title>PeerJS chat demo</title>
@@ -70,7 +70,7 @@
     // Show browser version
     $('#browsers').text(navigator.userAgent);
 
-    document.getElementById('mycanvasdiv').addEventListener("click", function(e) {
+    document.getElementById('fullscreen').addEventListener("click", function(e) {
         e.preventDefault();
 
         if (!inFullScreen)
@@ -96,7 +96,9 @@
         Canvasに対応したブラウザを用意して下さい。
     </canvas>
     <br/>
+    <div id="fullscreen">
     Toggle Fullscreen
+    </div>
     </div>
     <div id="info"></div>
 
