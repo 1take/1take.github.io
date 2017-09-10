@@ -29,7 +29,7 @@ function clearCanvas() {
     }
     var ctx = canvas.getContext('2d');
 
-    ctx.clearRect(0, 0, 640, 480);
+    ctx.clearRect(0, 0, 480, 640);
 }
 
 (function () {

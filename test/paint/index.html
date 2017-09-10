@@ -6,12 +6,33 @@
 <meta http-equiv="Content-Language" content="en-us"> 
 
     <style>
-        #mycanvas {
-            border: 1px solid #333;
-        }
-        *: -webkit-full-screen {
+        : -webkit-full-screen {
+            position : absolute ;
+            left     : 0;
+            top      : 0;
             background-color: rgba(255,255,255,255);
             z-index: 1;
+            width: 100%;
+            height: 100%;
+        }
+
+        html,
+        body {
+          height: 100%;
+          margin: 0;
+          overflow: hidden;
+          width: 100%;
+        }
+
+        #mycanvasdiv {
+          height: 80%;
+          width: 99%;
+        }
+
+        #mycanvas {
+          border: 1px solid #DDDDDD;
+          background: #FAFAFA;
+          display: block;
         }
 
     </style>
@@ -80,27 +101,54 @@
 
         inFullScreen = !inFullScreen;
     });
+
+
+    (function() {
+      var canvas = document.getElementById('mycanvas');
+      var container = document.getElementById('mycanvasdiv');
+      sizing();
+    
+      function sizing() {
+        if (container.offsetHeight > container.offsetWidth * 4.0 / 3.0) {
+          canvas.height = container.offsetWidth * 4.0 / 3.0;
+          canvas.width = container.offsetWidth;
+        } else {
+          canvas.height = container.offsetHeight;
+          canvas.width = container.offsetHeight * 3.0 / 4.0;
+        }
+      }
+    
+      window.addEventListener('resize', function() {
+        (!window.requestAnimationFrame) ? setTimeout(sizing, 300): window.requestAnimationFrame(sizing);  
+      });
+    })();
+
+
+
+
   });
+
 
 </script>
 </head> 
  
 <body> 
 
-  Your PeerJS id is : <span id="pid"></span><br><br>
+  Your PeerJS id is : <span id="pid"></span><br/>
   Connect to peer: <input type="text" id="rid" placeholder="Someone else's id">
-                   <input type="button" value="Connect" id="connect"><br><br>
+                   <input type="button" value="Connect" id="connect">
   
     <div id="mycanvasdiv">
-    <canvas width="640" height="480" id="mycanvas">
+    <canvas id="mycanvas">
         Canvasに対応したブラウザを用意して下さい。
     </canvas>
     <br/>
-    <div id="fullscreen">
-    Toggle Fullscreen
-    </div>
     </div>
     <div id="info"></div>
+
+    <div id="fullscreen" style="display:none;">
+    Toggle Fullscreen
+    </div>
 
     <div id="chat_area" style="display: none;">
         <input type="text" id="text" placeholder="Enter message">
