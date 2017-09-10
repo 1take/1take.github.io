@@ -11,12 +11,14 @@ function writeByMsg(msg) {
     var borderWidth = 1;
 
     var points = msg.split(" ");
-    for (var i = 2; i < points.length; i += 2) {
+    var w_rate = canvas.width / points[0];
+    var h_rate = canvas.height / points[1];
+    for (var i = 4; i < points.length; i += 2) {
         ctx.beginPath();
         var startX = points[i - 2], startY = points[i - 2 + 1];
         var endX = points[i], endY = points[i + 1];
-        ctx.moveTo(startX, startY);
-        ctx.lineTo(endX, endY);
+        ctx.moveTo(startX * w_rate, startY * h_rate);
+        ctx.lineTo(endX * w_rate, endY * h_rate);
         ctx.strokeStyle = "blue";
         ctx.stroke();
     }
@@ -113,7 +115,9 @@ function clearCanvas() {
             mouse.isDrawing = false;
 
             var msg = mouseStroke.join(" ");
-            conn.send(msg);
+
+            var canvas = document.getElementById('mycanvas');
+            conn.send(canvas.width + " " + canvas.height + " " + msg);
         };
 
         function cancel(e) {
