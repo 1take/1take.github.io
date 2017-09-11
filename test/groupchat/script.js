@@ -1,4 +1,4 @@
-window.__SKYWAY_KEY__ = '4eecc33-4adb-4e87-a4a1-cd7aa03ff9e2';
+window.__SKYWAY_KEY__ = '44eecc33-4adb-4e87-a4a1-cd7aa03ff9e2';
 
 /* eslint-disable require-jsdoc */
 $(function() {
