@@ -49,9 +49,10 @@ $(function() {
   // Connect to a room
   $('#connect').on('submit', e => {
     e.preventDefault();
-    const roomName = $('#roomName').val();
+    var roomName = $('#roomName').val();
     if (!roomName) {
-      return;
+      roonName = "LUP_SHAREDRAW";
+      // return;
     }
     if (!connectedPeers[roomName]) {
       // Create 2 connections, one labelled chat and another labelled file.
