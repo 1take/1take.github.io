@@ -4,12 +4,12 @@ $(function() {
   sizing();
 
   function sizing() {
-    if (container.offsetHeight > container.offsetWidth * 4.0 / 3.0) {
-      canvas.height = container.offsetWidth * 4.0 / 3.0;
+    if (container.offsetHeight > container.offsetWidth * 16.0 / 9.0) {
+      canvas.height = container.offsetWidth * 16.0 / 9.0;
       canvas.width = container.offsetWidth;
     } else {
       canvas.height = container.offsetHeight;
-      canvas.width = container.offsetHeight * 3.0 / 4.0;
+      canvas.width = container.offsetHeight * 9.0 / 16.0;
     }
   }
 
