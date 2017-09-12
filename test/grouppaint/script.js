@@ -81,7 +81,7 @@ $(function() {
     sendMsg(msg);
 
     $('#text').val('');
-    $('#text').focus();
+    // $('#text').focus();
   });
 
   // Show browser version
@@ -99,7 +99,7 @@ $(function() {
   // Handle a connection object.
   function connect(room) {
     // Handle a chat connection.
-    $('#text').focus();
+    //$('#text').focus();
     const chatbox = $('<div></div>').addClass('connection').addClass('active').attr('id', room.name);
     const roomName = room.name.replace('sfu_text_', '');
     const header = $('<h1></h1>').html('Room: <strong>' + roomName + '</strong>');
