@@ -44,10 +44,10 @@ $(function() {
     e.stopPropagation();
   }
 
-  $('#roomName').focus();
+  //$('#roomName').focus();
 
   // Connect to a room
-  $('#connect').on('submit', e => {
+  $('#connect').on('click', e => {
     e.preventDefault();
     var roomName = $('#roomName').val();
     if (!roomName) {
@@ -65,7 +65,7 @@ $(function() {
   });
 
   // Close a connection.
-  $('#close').on('click', () => {
+  $('close').on('click', () => {
     eachActiveRoom((room, $c) => {
       room.close();
       $c.remove();
@@ -100,6 +100,9 @@ $(function() {
   function connect(room) {
     // Handle a chat connection.
     //$('#text').focus();
+
+    $('#connect').attr("src", "../../asset/connect_on.bmp");
+
     const chatbox = $('<div></div>').addClass('connection').addClass('active').attr('id', room.name);
     const roomName = room.name.replace('sfu_text_', '');
     const header = $('<h1></h1>').html('Room: <strong>' + roomName + '</strong>');

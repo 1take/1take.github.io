@@ -5,24 +5,29 @@ body {
   margin: 0;
   overflow: hidden;
   width: 100%;
+  background-color: #DDDDDD;
+}
+
+#actions {
+  width: 99%;
+  text-align: center;
 }
 
 #mycanvasdiv {
-  height: 80%;
   width: 99%;
+  height: 80%;
+  text-align: center;
 }
 
 #mycanvas {
-  border: 1px solid #DDDDDD;
-  background: #FAFAFA;
-  display: block;
+  border: 3px solid #DDDDDD;
+  background-color: #FFFFFF;
 }
 
 body,html {
   padding: 0;
   margin: 0;
   font-family: Arial;
-  background-color: #eee;
   color: #444;
   font-size: 15px;
   line-height: 18px;
@@ -110,7 +115,7 @@ a {
 button, input {
   font-size: 15px;
   font-family: Arial;
-  border: 1px solid #ccc;
+  border: 3px solid #ccc;
   border-right: 0;
   padding: 5px;
   background: #fff;
