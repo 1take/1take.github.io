@@ -51,7 +51,12 @@ $(function() {
       addPaintingListener('mycanvas2')    
   });  
 
-  window.addEventListener('resize', function() {
-    (!window.requestAnimationFrame) ? setTimeout(sizing, 300): window.requestAnimationFrame(sizing);  
-  });
+  //window.addEventListener('resize', function() {
+  //  (!window.requestAnimationFrame) ? setTimeout(sizing, 300): window.requestAnimationFrame(sizing);  
+  //});
+
+  //document.body.addEventListener('click', function() {
+  //  document.body.webkitRequestFullscreen();
+  //});
+
 });
