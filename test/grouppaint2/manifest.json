@@ -1,0 +1,13 @@
+{
+  "short_name": "Group Paint",
+  "name": "Group Paint by LUP",
+  "icons": [
+    {
+      "src": "../../asset/pencil.bmp",
+      "sizes": "96x96",
+      "type": "image/bmp"
+    }
+  ],
+  "start_url": "index.html",
+  "display": "standalone"
+}
