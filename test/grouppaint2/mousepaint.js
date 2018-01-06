@@ -1,5 +1,7 @@
 mouseStroke = [];
 
+var LINE_WIDTH = 5;
+
 function writeByMsg(msg) {
     var canvas = document.getElementById('mycanvas');
     if (!canvas || !canvas.getContext) {
@@ -15,6 +17,7 @@ function writeByMsg(msg) {
     var h_rate = canvas.height / points[1];
     for (var i = 4; i < points.length; i += 2) {
         ctx.beginPath();
+	ctx.lineWidth = LINE_WIDTH;
         var startX = points[i - 2], startY = points[i - 2 + 1];
         var endX = points[i], endY = points[i + 1];
         ctx.moveTo(startX * w_rate, startY * h_rate);
@@ -34,6 +37,16 @@ function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+var BROWSER_DEFAULT_ENABLED = true;
+function toggleBrowserDefault() {
+  BROWSER_DEFAULT_ENABLED = !BROWSER_DEFAULT_ENABLED;
+}
+function enableBrowserDefault() {
+  BROWSER_DEFAULT_ENABLED = true;
+}
+function disableBrowserDefault() {
+  BROWSER_DEFAULT_ENABLED = false;
+}
 
 function addPaintingListener(mycanvas) {
     var canvas = document.getElementById(mycanvas);
@@ -64,10 +77,11 @@ function addPaintingListener(mycanvas) {
             mouseStroke.push(mouse.x);
             mouseStroke.push(mouse.y);
             if (mouseStroke.length == 0) return;
-            var max = mouseStroke.length - 1; 
+            var max = mouseStroke.length - 1;
             var curX = mouseStroke[max - 1], curY = mouseStroke[max];
             var prevX = mouseStroke[max - 3], prevY = mouseStroke[max - 2];
             ctx.beginPath();
+	    ctx.lineWidth = LINE_WIDTH;
             ctx.moveTo(prevX, prevY);
             ctx.lineTo(curX, curY);
             ctx.strokeStyle = mouse.color;
@@ -91,8 +105,10 @@ function addPaintingListener(mycanvas) {
         end(e);
     };
     function prevent(f, e) {
-        e.preventDefault();
-        f(e);
+	if (!BROWSER_DEFAULT_ENABLED) {
+            e.preventDefault();
+            f(e);
+	}
     }
     canvas.addEventListener("mousemove", function (e) {
         prevent(move, e);

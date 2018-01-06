@@ -1,3 +1,10 @@
+var BOARD_WIDTH_BASE = 1280;
+var BOARD_HEIGHT_BASE = 960;
+var BOARD_COL = 3;
+var BOARD_ROW = 3;
+var BOARD_WIDTH = BOARD_WIDTH_BASE * BOARD_COL;
+var BOARD_HEIGHT = BOARD_HEIGHT_BASE * BOARD_ROW;
+
 $(function() {
   var action_button_num = 6.0;
   var action = document.getElementById('actions');
@@ -7,56 +14,17 @@ $(function() {
   sizing();
 
   function sizing() {
-    if (container.offsetHeight > container.offsetWidth * 4.0 / 3.0) {
-      canvas.height = container.offsetWidth * 4.0 / 3.0;
-      container.height = container.offsetWidth * 4.0 / 3.0;
-      canvas.width = container.offsetWidth;
-    } else {
-      canvas.height = container.offsetHeight;
-      canvas.width = container.offsetHeight * 3.0 / 4.0;
-    }
 
-    //var pencil = $("#pencil");
-    //document.getElementById('pencil').width = 200; //container.offsetWidth / action_button_num;
-    $(".action_button").attr("width", action.offsetWidth * 0.8 / action_button_num);
-    $(".action_button").css("-webkit-border-radius", action.offsetWidth * 0.8 / action_button_num / 6.0);
-    $(".action_button").css("margin", action.offsetWidth * 0.8 / action_button_num / 25.0);
+    canvas.height = BOARD_HEIGHT;
+    canvas.width = BOARD_WIDTH;
 
+    console.log("canvas size: " + canvas.height + ", " + canvas.width);
+
+    // (3px (border) + 10px(padding)) * 2
+    var margin = 26;
+    $(".action_button").attr("width", action.offsetHeight - margin);
+    $(".action_button").attr("height", action.offsetHeight - margin);
+    $(".action_button").css("-webkit-border-radius", (action.offsetHeight - margin) / 6.0);
   }
-
-  var go = document.getElementById('go');
-  go.addEventListener('click', function () {
-
-      if (document.getElementById('mycanvas2') === null ) {
-        var canvas2 = document.createElement('canvas');
-        canvas2.id = 'mycanvas2';
-        canvas2.width = canvas.width;
-        canvas2.height = canvas.height;
-        canvas2.setAttribute('class', 'canvas');
-        container.appendChild(canvas2);
-
-        addPaintingListener('mycanvas2')
-      }
-
-      $("#mycanvas").css("display", "none");
-      $("#mycanvas2").css("display", "");
-    }
-  );
-
-  var back = document.getElementById('back');
-  back.addEventListener('click',
-    function () {
-      $("#mycanvas").css("display", "");
-      $("#mycanvas2").css("display", "none");
-      addPaintingListener('mycanvas2')    
-  });  
-
-  //window.addEventListener('resize', function() {
-  //  (!window.requestAnimationFrame) ? setTimeout(sizing, 300): window.requestAnimationFrame(sizing);  
-  //});
-
-  //document.body.addEventListener('click', function() {
-  //  document.body.webkitRequestFullscreen();
-  //});
 
 });

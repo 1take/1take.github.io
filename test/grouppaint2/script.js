@@ -39,6 +39,7 @@ $(function() {
       $c.find('.messages').append('<div><span class="file">You sent a file.</span></div>');
     });
   });
+
   function doNothing(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -84,6 +85,16 @@ $(function() {
     // $('#text').focus();
   });
 
+  $('#pen').on('click', e => {
+    e.preventDefault();
+    disableBrowserDefault();
+  });
+
+  $('#view').on('click', e => {
+    e.preventDefault();
+    enableBrowserDefault();
+  });
+
   // Show browser version
   $('#browsers').text(navigator.userAgent);
 
@@ -93,8 +104,6 @@ $(function() {
       peer.destroy();
     }
   };
-
-
 
   // Handle a connection object.
   function connect(room) {
@@ -150,6 +159,7 @@ $(function() {
         messages.append('<div><span class="file">' +
           message.src + ' has sent you a <a target="_blank" href="' + url + '">file</a>.</span></div>');
       } else {
+        console.log(message.data);
         writeByMsg(message.data);
         messages.append('<div><span class="peer">' + message.src + '</span>: ' + message.data + '</div>');
       }
@@ -168,11 +178,12 @@ $(function() {
 });
 
 function sendMsg(msg) {
+  console.log(msg);
   eachActiveRoom((room, $c) => {
     room.send(msg);
     $c.find('.messages').append('<div><span class="you">You: </span>' + msg
       + '</div>');
-  });    
+  });
 }
 
 // Goes through each active peer and calls FN on its connections.
