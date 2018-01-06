@@ -48,6 +48,35 @@ function disableBrowserDefault() {
   BROWSER_DEFAULT_ENABLED = false;
 }
 
+var pinching = false;
+var d0 = 1;
+var d1 = 1;
+var pinchTarget = "#mycanvas";
+function customZoomMove(e) {
+  if (!BROWSER_DEFAULT_ENABLED) return;
+
+  if (e.touches.length == 2) {
+    if (!pinching) {
+      pinching = true;
+      d0 = Math.sqrt(
+        Math.pow(e.touches[1].screenX - e.touches[0].screenX, 2) +
+        Math.pow(e.touches[1].screenY - e.touches[0].screenY, 2)
+      );
+    } else {
+      d1 = Math.sqrt(
+        Math.pow(e.touches[1].screenX - e.touches[0].screenX, 2) +
+        Math.pow(e.touches[1].screenY - e.touches[0].screenY, 2)
+      );
+      document.querySelector(pinchTarget).style.zoom = d1 / d0;
+    }
+  }
+}
+function customZoomEnd() {
+    if (!BROWSER_DEFAULT_ENABLED) return;
+
+    pinching = false;
+}
+
 function addPaintingListener(mycanvas) {
     var canvas = document.getElementById(mycanvas);
     if (!canvas || !canvas.getContext) {
@@ -66,10 +95,12 @@ function addPaintingListener(mycanvas) {
         //2.マウスが動いたら座標値を取得
         var rect = e.target.getBoundingClientRect();
         var cx, cy, ev;
-        if (e.type.indexOf('touch') != -1)
+        if (e.type.indexOf('touch') != -1) {
+	    customZoomMove(e);
             ev = e.touches[0];
-        else
+        } else {
             ev = e;
+	}
         mouse.x = ev.clientX - rect.left - borderWidth;
         mouse.y = ev.clientY - rect.top - borderWidth;
         //4.isDrawがtrueのとき描画
@@ -93,6 +124,9 @@ function addPaintingListener(mycanvas) {
         mouse.isDrawing = true;
     };
     function end(e) {
+	if (e.type.indexOf('touch') != -1) {
+	    customZoomEnd();
+	}
         mouse.isDrawing = false;
         if (mouseStroke.length > 3) {
             var msg = mouseStroke.join(" ");
