@@ -86,6 +86,7 @@ $(function() {
   });
 
   $('#pen').on('click', e => {
+    console.log("clicked");
     e.preventDefault();
     disableBrowserDefault();
   });

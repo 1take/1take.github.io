@@ -54,7 +54,6 @@ var d1 = 1;
 var pinchTarget = "#mycanvas";
 function customZoomMove(e) {
   if (!BROWSER_DEFAULT_ENABLED) return;
-
   if (e.touches.length == 2) {
     if (!pinching) {
       pinching = true;
@@ -70,12 +69,27 @@ function customZoomMove(e) {
       document.querySelector(pinchTarget).style.zoom = d1 / d0;
     }
   }
+
+// test - begin
+//  if (!pinching) {
+//    pinching = true
+//  }
+//  document.querySelector(pinchTarget).style.zoom = 2;
+// test - end
 }
 function customZoomEnd() {
     if (!BROWSER_DEFAULT_ENABLED) return;
 
     pinching = false;
+    document.querySelector(pinchTarget).style.zoom = "";
 }
+
+document.addEventListener("touchstart", function (e) {
+     customZoomMove(e);
+});
+document.addEventListener("touchend", function (e) {
+     customZoomEnd(e);
+});
 
 function addPaintingListener(mycanvas) {
     var canvas = document.getElementById(mycanvas);
@@ -96,7 +110,6 @@ function addPaintingListener(mycanvas) {
         var rect = e.target.getBoundingClientRect();
         var cx, cy, ev;
         if (e.type.indexOf('touch') != -1) {
-	    customZoomMove(e);
             ev = e.touches[0];
         } else {
             ev = e;
@@ -124,9 +137,6 @@ function addPaintingListener(mycanvas) {
         mouse.isDrawing = true;
     };
     function end(e) {
-	if (e.type.indexOf('touch') != -1) {
-	    customZoomEnd();
-	}
         mouse.isDrawing = false;
         if (mouseStroke.length > 3) {
             var msg = mouseStroke.join(" ");
