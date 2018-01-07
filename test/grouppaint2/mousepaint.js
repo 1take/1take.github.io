@@ -53,7 +53,8 @@ var d0 = 1;
 var d1 = 1;
 var pinchTarget = "#mycanvas";
 
-var pinchtest = true;
+var pinchtest = false;
+
 function customZoomMove(e) {
   if (!BROWSER_DEFAULT_ENABLED) return;
 
