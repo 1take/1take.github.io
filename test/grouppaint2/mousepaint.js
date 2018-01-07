@@ -59,18 +59,21 @@ function customZoomMove(e) {
 
   if (!pinchtest) {
       if (e.touches.length == 2) {
+	  alert("in touch length 2");
 	  if (!pinching) {
 	      pinching = true;
 	      d0 = Math.sqrt(
 		  Math.pow(e.touches[1].screenX - e.touches[0].screenX, 2) +
 		      Math.pow(e.touches[1].screenY - e.touches[0].screenY, 2)
 	      );
+	      alert("in touch length 2 - pinch false");
 	  } else {
 	      d1 = Math.sqrt(
 		  Math.pow(e.touches[1].screenX - e.touches[0].screenX, 2) +
 		      Math.pow(e.touches[1].screenY - e.touches[0].screenY, 2)
 	      );
 	      document.querySelector(pinchTarget).style.zoom = d1 / d0;
+	      alert("in touch length 2 - pinch true");
 	  }
       }
   } else {
