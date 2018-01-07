@@ -52,36 +52,41 @@ var pinching = false;
 var d0 = 1;
 var d1 = 1;
 var pinchTarget = "#mycanvas";
+
+var pinchtest = true;
 function customZoomMove(e) {
   if (!BROWSER_DEFAULT_ENABLED) return;
-  if (e.touches.length == 2) {
-    if (!pinching) {
-      pinching = true;
-      d0 = Math.sqrt(
-        Math.pow(e.touches[1].screenX - e.touches[0].screenX, 2) +
-        Math.pow(e.touches[1].screenY - e.touches[0].screenY, 2)
-      );
-    } else {
-      d1 = Math.sqrt(
-        Math.pow(e.touches[1].screenX - e.touches[0].screenX, 2) +
-        Math.pow(e.touches[1].screenY - e.touches[0].screenY, 2)
-      );
-      document.querySelector(pinchTarget).style.zoom = d1 / d0;
-    }
-  }
 
-// test - begin
-//  if (!pinching) {
-//    pinching = true
-//  }
-//  document.querySelector(pinchTarget).style.zoom = 2;
-// test - end
+  if (!pinchtest) {
+      if (e.touches.length == 2) {
+	  if (!pinching) {
+	      pinching = true;
+	      d0 = Math.sqrt(
+		  Math.pow(e.touches[1].screenX - e.touches[0].screenX, 2) +
+		      Math.pow(e.touches[1].screenY - e.touches[0].screenY, 2)
+	      );
+	  } else {
+	      d1 = Math.sqrt(
+		  Math.pow(e.touches[1].screenX - e.touches[0].screenX, 2) +
+		      Math.pow(e.touches[1].screenY - e.touches[0].screenY, 2)
+	      );
+	      document.querySelector(pinchTarget).style.zoom = d1 / d0;
+	  }
+      }
+  } else {
+      if (!pinching) {
+	  pinching = true
+      }
+      document.querySelector(pinchTarget).style.zoom = 2;
+  }
 }
 function customZoomEnd() {
     if (!BROWSER_DEFAULT_ENABLED) return;
 
     pinching = false;
-    document.querySelector(pinchTarget).style.zoom = "";
+    if (pinchtest) {
+	document.querySelector(pinchTarget).style.zoom = "";
+    }
 }
 
 document.addEventListener("touchstart", function (e) {

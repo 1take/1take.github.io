@@ -96,6 +96,16 @@ $(function() {
     enableBrowserDefault();
   });
 
+  $('#eraser').on('click', e => {
+    e.preventDefault();
+    pinchtest = true;
+  });
+
+  $('#undo').on('click', e => {
+    e.preventDefault();
+    pinchtest = false;
+  });
+
   // Show browser version
   $('#browsers').text(navigator.userAgent);
 
