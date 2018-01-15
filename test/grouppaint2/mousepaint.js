@@ -84,6 +84,8 @@ function customZoomMove(e) {
       document.querySelector(pinchTarget).style.zoom = 2;
   }
 }
+
+
 function customZoomEnd() {
     if (!BROWSER_DEFAULT_ENABLED) return;
 
@@ -114,6 +116,21 @@ function addPaintingListener(mycanvas) {
         isDrawing: false
     };
     var borderWidth = 1;
+    function getOffset(evt) {
+        var el = evt.target,
+            x = 0,
+            y = 0;
+
+        while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
+            x += el.offsetLeft;// - el.scrollLeft;
+            y += el.offsetTop;// - el.scrollTop;
+            el = el.offsetParent;
+        }
+        x = evt.clientX / 3 - x;
+        y = evt.clientY / 3;
+
+        return { x: x, y: y };
+    }
     function move(e) {
         //2.マウスが動いたら座標値を取得
         var rect = e.target.getBoundingClientRect();
@@ -123,8 +140,20 @@ function addPaintingListener(mycanvas) {
         } else {
             ev = e;
 	}
-        mouse.x = ev.clientX - rect.left - borderWidth;
-        mouse.y = ev.clientY - rect.top - borderWidth;
+        var pos = getOffset(ev);
+        mouse.x = ev.clientX / 3 - rect.left - borderWidth;
+        mouse.y = ev.clientY / 3 - rect.top - borderWidth;
+        mouse.x = ev.pageX - ev.target.offsetParent.offsetLeft;
+        mouse.y = ev.pageY - ev.target.offsetParent.offsetTop;
+        mouse.x += ev.target.offsetParent.scrollLeft;
+        mouse.y += ev.target.offsetParent.scrollTop;
+        var zoom = document.querySelector(pinchTarget).style.zoom;
+        mouse.x /= zoom;
+        mouse.y /= zoom;
+        mouse.x -= 10; // border, margin
+        mouse.y -= 10; // border, margin
+        // mouse.x = ev.layerX / document.querySelector(pinchTarget).style.zoom - 10;
+        // mouse.y = ev.layerY / document.querySelector(pinchTarget).style.zoom - 10;
         //4.isDrawがtrueのとき描画
         if (mouse.isDrawing) {
             mouseStroke.push(mouse.x);
@@ -194,5 +223,8 @@ function addPaintingListener(mycanvas) {
 (function () {
     $(document).ready(function () {
       addPaintingListener('mycanvas');
+
+      //// test
+      document.querySelector(pinchTarget).style.zoom = 3;
     });
 })();
