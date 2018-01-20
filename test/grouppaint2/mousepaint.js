@@ -220,6 +220,8 @@ function addPaintingListener(mycanvas) {
     function start(e) {
         mouseStroke = [];
         mouse.isDrawing = true;
+        move(e);
+        move(e);
     };
     function end(e) {
         console.log("end is called");
