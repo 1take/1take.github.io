@@ -26,9 +26,9 @@ function writeByMsg(msg) {
     var w_ratio = canvas.width / points[1];
     var h_ratio = canvas.height / points[2];
     for (var i = 3; i < points.length - 2; i += 2) {
-        var start = {x: points[i] * w_ratio, 
+        var start = {x: points[i] * w_ratio,
                      y: points[i + 1] * h_ratio};
-        var end = {x: points[i + 2] * w_ratio, 
+        var end = {x: points[i + 2] * w_ratio,
                    y: points[i + 2 +1] * h_ratio};
 
         if (type == 0) {
@@ -110,7 +110,7 @@ document.getElementById(target).addEventListener("touchstart", function (e) {
      e.preventDefault();
 });
 document.getElementById(target).addEventListener("touchmove", function (e) {
-     e.preventDefault();   
+     e.preventDefault();
      customZoomMove(e);
 });
 document.getElementById(target).addEventListener("touchend", function (e) {
@@ -194,7 +194,7 @@ function addPaintingListener(mycanvas) {
         if (zoom != 1) {
             mouse.y += ev.target.offsetParent.scrollTop;
         } else {
-            mouse.y += -112;
+            // mouse.y += -112;
         }
         mouse.x /= zoom;
         mouse.y /= zoom;
@@ -228,7 +228,7 @@ function addPaintingListener(mycanvas) {
             var msg = mouseStroke.join(" ");
             var canvas = document.getElementById(mycanvas);
             msg = (DESTINATION_OUT ? 0 : 1) + " " +
-                canvas.width + " " + canvas.height + " " + 
+                canvas.width + " " + canvas.height + " " +
                 msg;
             sendMsg(msg);
             console.log("sendMsg is called");
@@ -277,6 +277,6 @@ function addPaintingListener(mycanvas) {
 
       addCustomZoom('mycanvas');
       //// test
-       document.querySelector(pinchTarget).style.zoom = 1;
+	document.querySelector(pinchTarget).style.zoom = 1;
     });
 })();

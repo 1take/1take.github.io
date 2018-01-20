@@ -106,7 +106,7 @@ $(function() {
     DESTINATION_OUT = true;
   });
 
-  $('#undo').on('click', e => {
+  $('#trash').on('click', e => {
     e.preventDefault();
     sendMsg("-1"); // clear canvas
     clearCanvas();
