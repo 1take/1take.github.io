@@ -22,6 +22,7 @@ $(function() {
   // Show this peer's ID.
   peer.on('open', id => {
     $('#pid').text(id);
+    doConnect();
   });
   // Await connections from others
   peer.on('connection', connect);
@@ -47,9 +48,7 @@ $(function() {
 
   //$('#roomName').focus();
 
-  // Connect to a room
-  $('#connect').on('click', e => {
-    e.preventDefault();
+  function doConnect() {
     var roomName = $('#roomName').val();
     if (!roomName) {
       roonName = "LUP_SHAREDRAW";
@@ -63,6 +62,12 @@ $(function() {
         connectedPeers[roomName] = room;
       });
     }
+  }
+
+  // Connect to a room
+  $('#connect').on('click', e => {
+    e.preventDefault();
+    doConnect();
   });
 
   // Close a connection.
@@ -88,7 +93,7 @@ $(function() {
   $('#pen').on('click', e => {
     console.log("clicked");
     e.preventDefault();
-    disableBrowserDefault();
+    DESTINATION_OUT = false;
   });
 
   $('#view').on('click', e => {
@@ -98,12 +103,13 @@ $(function() {
 
   $('#eraser').on('click', e => {
     e.preventDefault();
-    pinchtest = true;
+    DESTINATION_OUT = true;
   });
 
   $('#undo').on('click', e => {
     e.preventDefault();
-    pinchtest = false;
+    sendMsg("-1"); // clear canvas
+    clearCanvas();
   });
 
   // Show browser version
@@ -184,8 +190,6 @@ $(function() {
       messages.append('<div><span class="peer">' + peerId + '</span>: has left the room </div>');
     });
   }
-
-
 });
 
 function sendMsg(msg) {
