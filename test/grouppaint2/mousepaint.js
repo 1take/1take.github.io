@@ -105,11 +105,16 @@ function customZoomMove(e) {
            p1 = {x: (e.touches[1].clientX + e.touches[0].clientX) / 2,
                  y: (e.touches[1].clientY + e.touches[0].clientY) / 2};
 
-          var ratio = Math.min(Math.max(d1 / d0 * zoom0, 1), 3.0);
-          document.querySelector(pinchTarget).style.zoom = ratio;
+          var zoom1 = Math.min(Math.max(d1 / d0 * zoom0, 1), 3.0);
+          document.querySelector(pinchTarget).style.zoom = zoom1;
 
-          var scroll1 = {l: d1 / d0 * (p0.x + scroll0.l) - p1.x,
-                         t: d1 / d0 * (p0.y + scroll0.t) - p1.y};
+          var scroll1 = {l: zoom1 / zoom0 * (p0.x + scroll0.l) - p1.x,
+                         t: zoom1 / zoom0 * (p0.y + scroll0.t) - p1.y};
+          /*
+          console.log(zoom1 + " " +
+                      p1.x + "," + p1.y + " " +
+                      scroll1.l + "," + scroll1.t);
+          */
 
           $(scrollLeftTarget).scrollLeft(scroll1.l);
           $(scrollTopTarget).scrollTop(scroll1.t);
