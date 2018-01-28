@@ -4,49 +4,87 @@ var DESTINATION_OUT = false;
 var PEN_WIDTH = 5;
 var ERASER_WIDTH = 80;
 
-function writeByMsg(msg) {
-    var canvas = document.getElementById('mycanvas');
+
+function executeMsg(msg) {
+    var m = msg.split(" ");
+
+    var uid = m[0];
+    m.shift();
+    var cmd = m[0];
+    m.shift();
+    var target = m[0];
+    m.shift();
+
+    if (cmd == "point") {
+        position(uid, target, m);
+    } else if (cmd == "draw") {
+        draw(cmd, uid, target, m);
+    } else if (cmd == "erase") {
+        erase(cmd, uid, target, m);
+    } else if (cmd == "clear") {
+        clear(uid, target, m);
+    } else if (cmd == "create") {
+    }
+    
+}
+
+function position(uid, target, m) {
+    if (target != 'mycanvas') return;
+
+    moveCursor(uid, m);
+}
+
+function showPointer(msg) {
+}
+
+function getContext(target) {
+    var canvas = document.getElementById(target);
     if (!canvas || !canvas.getContext) {
         return false;
     }
     var ctx = canvas.getContext('2d');
+    return {canvas: canvas, ctx: ctx};
+}
 
-    //マウスの座標を取得
-    var borderWidth = 1;
+function clear(uid, target, info) {
+    clearCanvas(target);
+    return;
+}
 
-    var points = msg.split(" ");
+function erase(cmd, uid, target, info) {
+    draw(cmd, uid, target, info);
+}
 
-    var type = points[0];
+function draw(cmd, uid, target, info) {
+    var c = getContext(target);
 
-    if (type == -1) {
-        clearCanvas();
-        return;
-    }
+    var points = info;
+    var w_ratio = c.canvas.width / points[0];
+    points.shift();
+    var h_ratio = c.canvas.height / points[0];
+    points.shift();
+    drawStroke(cmd, c.ctx, points, w_ratio, h_ratio);
+}
 
-    var w_ratio = canvas.width / points[1];
-    var h_ratio = canvas.height / points[2];
-    for (var i = 3; i < points.length - 2; i += 2) {
+function drawStroke(cmd, ctx, points, w_ratio, h_ratio) {
+    for (var i = 0; i < points.length - 2; i += 2) {
         var start = {x: points[i] * w_ratio,
                      y: points[i + 1] * h_ratio};
         var end = {x: points[i + 2] * w_ratio,
                    y: points[i + 2 +1] * h_ratio};
 
-        if (type == 0) {
+        if (cmd == "erase") {
             drawWithEraser(ctx, start, end);
-        } else if (type == 1) {
+        } else if (cmd == "draw") {
             drawWithPen(ctx, start, end);
         }
     }
 }
 
-function clearCanvas() {
-    var canvas = document.getElementById('mycanvas');
-    if (!canvas || !canvas.getContext) {
-        return false;
-    }
-    var ctx = canvas.getContext('2d');
+function clearCanvas(target) {
+    var c = getContext(target);
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    c.ctx.clearRect(0, 0, c.canvas.width, c.canvas.height);
 }
 
 var pinching = false;
@@ -165,6 +203,24 @@ function drawWithEraser(ctx, prev, cur) {
     ctx.stroke();
 }
 
+function moveCursor(uid, clientPos) {
+    var cursorid = 'cursor' + uid;
+    var cursor = document.getElementById(cursorid);
+    
+    if (!cursor) {
+        cursor = document.createElement("img");
+        cursor.id = cursorid;
+        cursor.src = "../../asset/pointer-blue-trans.png";
+        cursor.classList.add("cursor");
+        cursor.classList.add("rotate");
+        document.body.appendChild(cursor);
+        changeIconHue(uid, cursorid);
+    }
+    
+    $('#' + cursorid).css("left", Number(clientPos[0]));
+    $('#' + cursorid).css("top", Number(clientPos[1]));
+}
+
 function addPaintingListener(mycanvas) {
     var canvas = document.getElementById(mycanvas);
     if (!canvas || !canvas.getContext) {
@@ -203,6 +259,15 @@ function addPaintingListener(mycanvas) {
         } else {
             ev = e;
 	}
+
+        var clientPos = [ev.clientX, ev.clientY];
+        moveCursor(myid, clientPos);
+        if (mouseStroke.length % 4) {
+            sendMsg(myid + " " +
+                    "point" + " " +
+                    "mycanvas" + " " +
+                    clientPos.join(" "));
+        }
 
         var zoom = document.querySelector(pinchTarget).style.zoom;
         /* console.log("zoom:" + zoom + " pageY: " + ev.pageY +
@@ -251,7 +316,9 @@ function addPaintingListener(mycanvas) {
         if (mouseStroke.length > 3) {
             var msg = mouseStroke.join(" ");
             var canvas = document.getElementById(mycanvas);
-            msg = (DESTINATION_OUT ? 0 : 1) + " " +
+            msg = myid + " " +
+                (DESTINATION_OUT ? "erase" : "draw") + " " +
+                mycanvas + " " +
                 canvas.width + " " + canvas.height + " " +
                 msg;
             sendMsg(msg);

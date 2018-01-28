@@ -16,12 +16,44 @@ const peer = new Peer({
 });
 const connectedPeers = {};
 
+var myid;
+var hash;
+
+function getHashFromUid(uid) {
+    code = uid.charCodeAt(0);
+
+    console.log(myid + " " + code);
+
+    /* map ["0":"9"] => [1:10] */
+    if (48 <= code && code <= 57) {
+        code -= 47;
+    /* map ["A":"z"] => [11:62] */
+    } else if (65 <= code && code <= 122) {
+        code -= 64;
+        code += 10;
+    }
+
+    hash = code / (10 + 26 * 2);
+    return hash;
+}
+
+function changeIconHue(uid, elm) {
+    degree = 360 * getHashFromUid(uid);
+    console.log("degree:" + degree);
+    $("#" + elm).css({"-webkit-filter": "hue-rotate(" + degree + "deg)",
+                     "-moz-filter": "hue-rotate(" + degree + "deg)",
+                     "-o-filter": "hue-rotate(" + degree + "deg)",
+                     "-ms-filter": "hue-rotate(" + degree + "deg)",
+                     "filter": "hue-rotate(" + degree + "deg)"});
+}
+
 /* eslint-disable require-jsdoc */
 $(function() {
 
   // Show this peer's ID.
   peer.on('open', id => {
     $('#pid').text(id);
+    myid = id;
     doConnect();
   });
   // Await connections from others
@@ -108,8 +140,12 @@ $(function() {
 
   $('#trash').on('click', e => {
     e.preventDefault();
-    sendMsg("-1"); // clear canvas
-    clearCanvas();
+
+    var mycanvas = 'mycanvas';
+
+    msg = myid + " " + "clear" +  " " + mycanvas;
+    sendMsg(msg); // clear canvas
+    clearCanvas(mycanvas);
   });
 
   // Show browser version
@@ -128,6 +164,10 @@ $(function() {
     //$('#text').focus();
 
     $('#connect').attr("src", "../../asset/connect_on.bmp");
+    changeIconHue(myid, 'connect');
+
+    changeIconHue(myid, "pointer");
+    changeIconHue(myid, "cursor");
 
     const chatbox = $('<div></div>').addClass('connection').addClass('active').attr('id', room.name);
     const roomName = room.name.replace('sfu_text_', '');
@@ -176,8 +216,8 @@ $(function() {
         messages.append('<div><span class="file">' +
           message.src + ' has sent you a <a target="_blank" href="' + url + '">file</a>.</span></div>');
       } else {
-        console.log(message.data);
-        writeByMsg(message.data);
+        // console.log(message.data);
+        executeMsg(message.data);
         messages.append('<div><span class="peer">' + message.src + '</span>: ' + message.data + '</div>');
       }
     });
@@ -193,7 +233,7 @@ $(function() {
 });
 
 function sendMsg(msg) {
-  console.log(msg);
+  // console.log(msg);
   eachActiveRoom((room, $c) => {
     room.send(msg);
     $c.find('.messages').append('<div><span class="you">You: </span>' + msg

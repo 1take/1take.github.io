@@ -19,6 +19,13 @@
   left: 0;
 }
 
+img.cursor {
+  position: absolute;
+  pointer-events: none;
+  width: 35px;
+  height: 35px;
+}
+
 .rotate {
     -moz-transform: rotate(90deg);
     -webkit-transform: rotate(90deg);
