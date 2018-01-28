@@ -59,43 +59,65 @@ var p1 = {x: 0, y: 0};
 
 var pinchTarget = "#mycanvas";
 
-var scrollTarget = "#mycanvasdiv"; // chrome
-//var scrollTarget = "html"; // chrome
-// var scrollTarget = "body"; // safari
-//var pinchTargetWrap = "#mycanvasdiv";
+var scrollLeftTarget = "#mycanvasdiv";
+var scrollTopTarget = "";
+
+function getScrollTopTarget() {
+    var targets = ['html', // chrome (61.0 or later)
+                   'body']; // chrome, safari
+    for (var i = 0; i < targets.length; i++) {
+        var s = 1;
+        var t = targets[i];
+        $(t).scrollTop(s);
+        console.log("try scrollTopTarget: " + t + " " + $(t).scrollTop());
+        if ($(t).scrollTop() == s) {
+            console.log("scrollTopTarget: " + t);
+            scrollTopTarget = t;
+            $(t).scrollTop(0);
+            return;
+        }
+    }
+}
 
 function customZoomMove(e) {
+  if (scrollTopTarget == "") getScrollTopTarget();
 
   if (e.touches.length == 2) {
 
       if (!pinching) {
           pinching = true;
           d0 = Math.sqrt(
-                         Math.pow(e.touches[1].screenX - e.touches[0].screenX, 2) +
-                         Math.pow(e.touches[1].screenY - e.touches[0].screenY, 2)
+                         Math.pow(e.touches[1].clientX - e.touches[0].clientX, 2) +
+                         Math.pow(e.touches[1].clientY - e.touches[0].clientY, 2)
                          );
-          p0 = {x: (e.touches[1].screenX + e.touches[0].screenX) / 2,
-                y: (e.touches[1].screenY + e.touches[0].screenY) / 2};
+          p0 = {x: (e.touches[1].clientX + e.touches[0].clientX) / 2,
+                y: (e.touches[1].clientY + e.touches[0].clientY) / 2};
 
           zoom0 = document.querySelector(pinchTarget).style.zoom;
 
-          scroll0 = {l: $(scrollTarget).scrollLeft(),
-                     t: $('html').scrollTop()};
+          scroll0 = {l: $(scrollLeftTarget).scrollLeft(),
+                     t: $(scrollTopTarget).scrollTop()};
       } else {
           d1 = Math.sqrt(
-                         Math.pow(e.touches[1].screenX - e.touches[0].screenX, 2) +
-                         Math.pow(e.touches[1].screenY - e.touches[0].screenY, 2)
+                         Math.pow(e.touches[1].clientX - e.touches[0].clientX, 2) +
+                         Math.pow(e.touches[1].clientY - e.touches[0].clientY, 2)
                          );
-           p1 = {x: (e.touches[1].screenX + e.touches[0].screenX) / 2,
-                 y: (e.touches[1].screenY + e.touches[0].screenY) / 2};
+           p1 = {x: (e.touches[1].clientX + e.touches[0].clientX) / 2,
+                 y: (e.touches[1].clientY + e.touches[0].clientY) / 2};
 
-          var ratio = Math.min(Math.max(d1 / d0 * zoom0, 1), 3.0);
-          document.querySelector(pinchTarget).style.zoom = ratio;
+          var zoom1 = Math.min(Math.max(d1 / d0 * zoom0, 1), 3.0);
+          document.querySelector(pinchTarget).style.zoom = zoom1;
 
-          var scroll1 = {l: d1 / d0 * (p0.x + scroll0.l) - p1.x,
-                         t: d1 / d0 * (p0.y + scroll0.t) - p1.y};
-          $(scrollTarget).scrollLeft(scroll1.l);
-          $('html').scrollTop(scroll1.t);
+          var scroll1 = {l: zoom1 / zoom0 * (p0.x + scroll0.l) - p1.x,
+                         t: zoom1 / zoom0 * (p0.y + scroll0.t) - p1.y};
+          /*
+          console.log(zoom1 + " " +
+                      p1.x + "," + p1.y + " " +
+                      scroll1.l + "," + scroll1.t);
+          */
+
+          $(scrollLeftTarget).scrollLeft(scroll1.l);
+          $(scrollTopTarget).scrollTop(scroll1.t);
 
       }
   }
@@ -220,6 +242,8 @@ function addPaintingListener(mycanvas) {
     function start(e) {
         mouseStroke = [];
         mouse.isDrawing = true;
+        move(e);
+        move(e);
     };
     function end(e) {
         console.log("end is called");
