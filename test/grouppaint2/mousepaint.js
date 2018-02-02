@@ -1,9 +1,9 @@
+var isDrawEnable = true;
 mouseStroke = [];
 
 var DESTINATION_OUT = false;
 var PEN_WIDTH = 5;
 var ERASER_WIDTH = 80;
-
 
 function executeMsg(msg) {
     var m = msg.split(" ");
@@ -17,6 +17,8 @@ function executeMsg(msg) {
 
     if (cmd == "point") {
         position(uid, target, m);
+    } else if (cmd == "hide") {
+        hide(uid);
     } else if (cmd == "draw") {
         draw(cmd, uid, target, m);
     } else if (cmd == "erase") {
@@ -32,6 +34,10 @@ function position(uid, target, m) {
     if (target != 'mycanvas') return;
 
     moveCursor(uid, m);
+}
+
+function hide(uid) {
+    hideCursor(uid);
 }
 
 function showPointer(msg) {
@@ -97,28 +103,11 @@ var p1 = {x: 0, y: 0};
 
 var pinchTarget = "#mycanvas";
 
+var scrollTarget = "#mycanvasdiv";
 var scrollLeftTarget = "#mycanvasdiv";
 var scrollTopTarget = "";
 
-function getScrollTopTarget() {
-    var targets = ['html', // chrome (61.0 or later)
-                   'body']; // chrome, safari
-    for (var i = 0; i < targets.length; i++) {
-        var s = 1;
-        var t = targets[i];
-        $(t).scrollTop(s);
-        console.log("try scrollTopTarget: " + t + " " + $(t).scrollTop());
-        if ($(t).scrollTop() == s) {
-            console.log("scrollTopTarget: " + t);
-            scrollTopTarget = t;
-            $(t).scrollTop(0);
-            return;
-        }
-    }
-}
-
 function customZoomMove(e) {
-  if (scrollTopTarget == "") getScrollTopTarget();
 
   if (e.touches.length == 2) {
 
@@ -133,8 +122,8 @@ function customZoomMove(e) {
 
           zoom0 = document.querySelector(pinchTarget).style.zoom;
 
-          scroll0 = {l: $(scrollLeftTarget).scrollLeft(),
-                     t: $(scrollTopTarget).scrollTop()};
+          scroll0 = {l: $(scrollTarget).css("left").slice(0, -2),
+                     t: $(scrollTarget).css("top").slice(0, -2)};
       } else {
           d1 = Math.sqrt(
                          Math.pow(e.touches[1].clientX - e.touches[0].clientX, 2) +
@@ -143,19 +132,19 @@ function customZoomMove(e) {
            p1 = {x: (e.touches[1].clientX + e.touches[0].clientX) / 2,
                  y: (e.touches[1].clientY + e.touches[0].clientY) / 2};
 
-          var zoom1 = Math.min(Math.max(d1 / d0 * zoom0, 1), 3.0);
+
+           var zoom1 = Math.min(Math.max(d1 / d0 * zoom0, 0.5), 3.0);
           document.querySelector(pinchTarget).style.zoom = zoom1;
 
-          var scroll1 = {l: zoom1 / zoom0 * (p0.x + scroll0.l) - p1.x,
-                         t: zoom1 / zoom0 * (p0.y + scroll0.t) - p1.y};
-          /*
+          var scroll1 = {l: -(zoom1 / zoom0 * (p0.x - scroll0.l) - p1.x),
+                         t: -(zoom1 / zoom0 * (p0.y - scroll0.t) - p1.y)};
+
           console.log(zoom1 + " " +
                       p1.x + "," + p1.y + " " +
                       scroll1.l + "," + scroll1.t);
-          */
 
-          $(scrollLeftTarget).scrollLeft(scroll1.l);
-          $(scrollTopTarget).scrollTop(scroll1.t);
+          $(scrollTarget).css("left", scroll1.l);
+          $(scrollTarget).css("top", scroll1.t);
 
       }
   }
@@ -203,22 +192,38 @@ function drawWithEraser(ctx, prev, cur) {
     ctx.stroke();
 }
 
+function addCursorElm(uid) {
+    var cursorid = 'cursor' + uid;
+    cursor = document.createElement("img");
+    cursor.id = cursorid;
+    cursor.src = "../../asset/pointer-blue-trans.png";
+    cursor.classList.add("cursor");
+    cursor.classList.add("rotate");
+    document.getElementById('mycanvasdiv').appendChild(cursor);
+    changeIconHue(uid, cursorid);
+}
+
+function hideCursor(uid) {
+    var cursorid = 'cursor' + uid;
+    $('#' + cursorid).css("display", "none");
+}
+
 function moveCursor(uid, clientPos) {
     var cursorid = 'cursor' + uid;
     var cursor = document.getElementById(cursorid);
     
     if (!cursor) {
-        cursor = document.createElement("img");
-        cursor.id = cursorid;
-        cursor.src = "../../asset/pointer-blue-trans.png";
-        cursor.classList.add("cursor");
-        cursor.classList.add("rotate");
-        document.body.appendChild(cursor);
-        changeIconHue(uid, cursorid);
+        addCursorElm(uid);
     }
-    
-    $('#' + cursorid).css("left", Number(clientPos[0]));
-    $('#' + cursorid).css("top", Number(clientPos[1]));
+
+    var zoom = document.querySelector(pinchTarget).style.zoom;
+
+    $('#' + cursorid).css("display", "");
+    $('#' + cursorid).css("left", 
+                          Number(clientPos[0]) * zoom);
+    $('#' + cursorid).css("top", 
+                          Number(clientPos[1]) * zoom);
+
 }
 
 function addPaintingListener(mycanvas) {
@@ -260,19 +265,7 @@ function addPaintingListener(mycanvas) {
             ev = e;
 	}
 
-        var clientPos = [ev.clientX, ev.clientY];
-        moveCursor(myid, clientPos);
-        if (mouseStroke.length % 4) {
-            sendMsg(myid + " " +
-                    "point" + " " +
-                    "mycanvas" + " " +
-                    clientPos.join(" "));
-        }
-
         var zoom = document.querySelector(pinchTarget).style.zoom;
-        /* console.log("zoom:" + zoom + " pageY: " + ev.pageY +
-                    ", offsettop:" + ev.target.offsetParent.offsetTop +
-                    ", scrolltop: " + ev.target.offsetParent.scrollTop); */
 
         mouse.x = ev.pageX - ev.target.offsetParent.offsetLeft;
         mouse.y = ev.pageY - ev.target.offsetParent.offsetTop;
@@ -285,8 +278,21 @@ function addPaintingListener(mycanvas) {
         }
         mouse.x /= zoom;
         mouse.y /= zoom;
-        mouse.x -= 10; // border, margin
-        mouse.y -= 10; // border, margin
+        mouse.x -= 5; // border, margin
+        mouse.y -= 5; // border, margin
+
+        var clientPos = [ev.clientX - $(scrollTarget).css("left").slice(0, -2),
+                         ev.clientY - $(scrollTarget).css("top").slice(0, -2)];
+        clientPos[0] /= zoom;
+        clientPos[1] /= zoom;
+        if (!isDrawEnable) // show local cursor when pointing mode
+            moveCursor(myid, clientPos);
+        if (mouseStroke.length < 4 || mouseStroke.length % 4) {
+            sendMsg(myid + " " +
+                    "point" + " " +
+                    "mycanvas" + " " +
+                    clientPos.join(" "));
+        }
 
         //4.isDraw‚ªtrue‚Ì‚Æ‚«•`‰æ
         if (mouse.isDrawing) {
@@ -306,13 +312,15 @@ function addPaintingListener(mycanvas) {
     };
     function start(e) {
         mouseStroke = [];
-        mouse.isDrawing = true;
+        if (isDrawEnable)
+            mouse.isDrawing = true;
         move(e);
         move(e);
     };
     function end(e) {
         console.log("end is called");
         mouse.isDrawing = false;
+        // draw
         if (mouseStroke.length > 3) {
             var msg = mouseStroke.join(" ");
             var canvas = document.getElementById(mycanvas);
@@ -324,6 +332,11 @@ function addPaintingListener(mycanvas) {
             sendMsg(msg);
             console.log("sendMsg is called");
         }
+        // hide cursor
+        hideCursor(myid);
+        msg = myid + " " +
+            "hide" + " ";
+        sendMsg(msg);
     };
     function cancel(e) {
         end(e);

@@ -26,7 +26,7 @@ $(function() {
     var margin = 26;
     $(".action_button").attr("width", action.offsetHeight - margin);
     $(".action_button").attr("height", action.offsetHeight - margin);
-    $(".action_button").css("-webkit-border-radius", (action.offsetHeight - margin) / 2.0);
+    $(".action_button").css("-webkit-border-radius", (action.offsetHeight) / 2.0);
   }
 
 });

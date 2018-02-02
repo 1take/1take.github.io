@@ -47,6 +47,13 @@ function changeIconHue(uid, elm) {
                      "filter": "hue-rotate(" + degree + "deg)"});
 }
 
+function changeButtonSelected(ev) {
+    $(".action_button").addClass("unselected");
+    $("#" + ev.target.id).removeClass("unselected");
+    $(".action_button").removeClass("selected");
+    $("#" + ev.target.id).addClass("selected");
+}
+
 /* eslint-disable require-jsdoc */
 $(function() {
 
@@ -96,20 +103,6 @@ $(function() {
     }
   }
 
-  // Connect to a room
-  $('#connect').on('click', e => {
-    e.preventDefault();
-    doConnect();
-  });
-
-  // Close a connection.
-  $('close').on('click', () => {
-    eachActiveRoom((room, $c) => {
-      room.close();
-      $c.remove();
-    });
-  });
-
   // Send a chat message to all active connections.
   $('#send').on('submit', e => {
     e.preventDefault();
@@ -126,16 +119,22 @@ $(function() {
     console.log("clicked");
     e.preventDefault();
     DESTINATION_OUT = false;
+    isDrawEnable = true;
+    changeButtonSelected(e);
   });
 
-  $('#view').on('click', e => {
+  $('#pointer').on('click', e => {
+    console.log("clicked");
     e.preventDefault();
-    enableBrowserDefault();
+    isDrawEnable = false;
+    changeButtonSelected(e);
   });
 
   $('#eraser').on('click', e => {
     e.preventDefault();
     DESTINATION_OUT = true;
+    isDrawEnable = true;
+    changeButtonSelected(e);
   });
 
   $('#trash').on('click', e => {
@@ -146,6 +145,7 @@ $(function() {
     msg = myid + " " + "clear" +  " " + mycanvas;
     sendMsg(msg); // clear canvas
     clearCanvas(mycanvas);
+    changeButtonSelected(e);
   });
 
   // Show browser version
@@ -165,9 +165,6 @@ $(function() {
 
     $('#connect').attr("src", "../../asset/connect_on.bmp");
     changeIconHue(myid, 'connect');
-
-    changeIconHue(myid, "pointer");
-    changeIconHue(myid, "cursor");
 
     const chatbox = $('<div></div>').addClass('connection').addClass('active').attr('id', room.name);
     const roomName = room.name.replace('sfu_text_', '');

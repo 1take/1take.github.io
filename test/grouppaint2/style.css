@@ -8,6 +8,7 @@
   left: 0;
   //background-color: #5bc;
   //background-color: #FFFFFF;
+  z-index:2;
 }
 #status {
   position: fixed !important;
@@ -17,6 +18,11 @@
   text-align: right;
   top: 0;
   left: 0;
+  z-index:2;
+}
+.status_button {
+  width: 50px;
+  margin: 25px;
 }
 
 img.cursor {
@@ -39,12 +45,13 @@ img.cursor {
   //width: 99%;
   //height: 80%;
   //text-align: left;
-  overflow-x: scroll;
-  overflow-y: scroll;
+  //overflow-x: scroll;
+  //overflow-y: scroll;
+  position: absolute;
 }
 
 .canvas {
-  border: 10px solid #AAA;
+  border: 10px solid #CCC;
   background-color: #FFFFFF;
 }
 
@@ -57,6 +64,7 @@ body {
   font-size: 15px;
   line-height: 18px;
   text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+  background-color: #CCC
 }
 * html body{
     overflow: hidden;
@@ -170,4 +178,20 @@ form {
   font-size: 15px;
   color: #F2C777;
   margin-bottom: 10px;
+}
+
+.selected {
+  -webkit-filter: contrast(150%);
+  -moz-filter: contrast(150%);
+  -o-filter: contrast(150%);
+  -ms-filter: contrast(150%);
+  filter: contrast(150%);
+}
+
+.unselected {
+  -webkit-filter: brightness(2);
+  -moz-filter: brightness(2);
+  -o-filter: brightness(2);
+  -ms-filter: brightness(2);
+  filter: brightness(2);
 }
