@@ -191,8 +191,8 @@ function customZoomMove(e) {
                  y: (e.touches[1].clientY + e.touches[0].clientY) / 2};
 
 
-           var zoom1 = Math.min(Math.max(d1 / d0 * zoom0, 0.5), 3.0);
-
+           // var zoom1 = Math.min(Math.max(d1 / d0 * zoom0, 0.5), 3.0);
+           var zoom1 = 1; // disable zoom
           document.querySelector("#" + mycanvas).style.zoom = zoom1;
 
           var scroll1 = {l: -(zoom1 / zoom0 * (p0.x - scroll0.l) - p1.x),
