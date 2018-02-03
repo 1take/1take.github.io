@@ -2,7 +2,7 @@
   position: fixed !important;
   position: absolute;
   width: 100%;
-  height: 110px;
+  height: 60px;
   text-align: center;
   top: 0;
   left: 0;
@@ -14,15 +14,14 @@
   position: fixed !important;
   position: absolute;
   width: 100%;
-  height: 110px;
+  height: 60px;
   text-align: right;
   top: 0;
   left: 0;
   z-index:2;
 }
 .status_button {
-  width: 50px;
-  margin: 25px;
+  width: 47px;
 }
 
 img.cursor {
@@ -32,12 +31,20 @@ img.cursor {
   height: 35px;
 }
 
-.rotate {
+.rotate90 {
     -moz-transform: rotate(90deg);
     -webkit-transform: rotate(90deg);
     -o-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
     transform: rotate(90deg);
+}
+
+.rotate180 {
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 
 #mycanvasdiv {
@@ -194,4 +201,12 @@ form {
   -o-filter: brightness(2);
   -ms-filter: brightness(2);
   filter: brightness(2);
+}
+
+.focus {
+  display: ;
+}
+
+.unfocus {
+  display: none;
 }

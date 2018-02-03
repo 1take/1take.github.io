@@ -48,9 +48,10 @@ function changeIconHue(uid, elm) {
 }
 
 function changeButtonSelected(ev) {
-    $(".action_button").addClass("unselected");
+    var cur = $(".selected");
+    cur.removeClass("selected");
+    cur.addClass("unselected");
     $("#" + ev.target.id).removeClass("unselected");
-    $(".action_button").removeClass("selected");
     $("#" + ev.target.id).addClass("selected");
 }
 
@@ -140,12 +141,26 @@ $(function() {
   $('#trash').on('click', e => {
     e.preventDefault();
 
-    var mycanvas = 'mycanvas';
-
     msg = myid + " " + "clear" +  " " + mycanvas;
     sendMsg(msg); // clear canvas
     clearCanvas(mycanvas);
-    changeButtonSelected(e);
+  });
+
+  $('#go').on('click', e => {
+    e.preventDefault();
+
+    if (!changeCanvasFocus(1)) {
+        var newcanvas = createNewCanvas();
+        msg = myid + " " + "create" +  " " + newcanvas;
+        sendMsg(msg);
+
+        changeCanvasFocus(1)        
+    }
+  });
+
+  $('#back').on('click', e => {
+    e.preventDefault();
+    changeCanvasFocus(-1);
   });
 
   // Show browser version

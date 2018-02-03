@@ -5,6 +5,8 @@ var DESTINATION_OUT = false;
 var PEN_WIDTH = 5;
 var ERASER_WIDTH = 80;
 
+var mycanvas = 'mycanvas0';
+
 function executeMsg(msg) {
     var m = msg.split(" ");
 
@@ -26,12 +28,12 @@ function executeMsg(msg) {
     } else if (cmd == "clear") {
         clear(uid, target, m);
     } else if (cmd == "create") {
+        create(uid, target);
     }
-    
 }
 
 function position(uid, target, m) {
-    if (target != 'mycanvas') return;
+    if (target != mycanvas) return;
 
     moveCursor(uid, m);
 }
@@ -55,6 +57,62 @@ function getContext(target) {
 function clear(uid, target, info) {
     clearCanvas(target);
     return;
+}
+
+function create(uid, target) {
+    createCanvas(target);
+}
+
+function setupCanvas(canvas) {
+    canvas.classList.add("canvas");
+    canvas.classList.add("unfocus");
+    setCanvasSize(canvas);
+
+    addPaintingListener(canvas.id);
+    addCustomZoom(canvas.id);
+    document.querySelector("#" + canvas.id).style.zoom = 1;
+}
+
+function createCanvas(target) {
+    canvas = document.createElement("canvas");
+    canvas.id = target;
+    document.getElementById('mycanvasdiv').appendChild(canvas);
+    setupCanvas(canvas);
+}
+
+function getNewCanvasId() {
+    return "mycanvas" + getNumOfCanvas();
+}
+
+function createNewCanvas() {
+    var newcanvas = getNewCanvasId();
+    createCanvas(newcanvas);
+    return newcanvas;
+}
+
+function getNumOfCanvas() {
+    return $("canvas").length;
+}
+
+function changeCanvasFocus(i) {
+    var curi =
+        Number(mycanvas.slice(mycanvas.length - 1));
+    var newi = Math.max(0, Math.min(curi + i, getNumOfCanvas() - 1));
+
+    var newfocus = "mycanvas" + newi;
+
+    if (mycanvas != newfocus) {
+        mycanvas = newfocus;
+
+        $("canvas").addClass("unfocus");
+        $("#" + mycanvas).removeClass("unfocus");
+        $("#" + mycanvas).addClass("focus");
+
+        return true;
+    } else {
+        return false;
+    }
+
 }
 
 function erase(cmd, uid, target, info) {
@@ -101,7 +159,7 @@ var scroll0 = {l: 0, t: 0};
 var p0 = {x: 0, y: 0};
 var p1 = {x: 0, y: 0};
 
-var pinchTarget = "#mycanvas";
+//var pinchTarget = "#mycanvas";
 
 var scrollTarget = "#mycanvasdiv";
 var scrollLeftTarget = "#mycanvasdiv";
@@ -120,7 +178,7 @@ function customZoomMove(e) {
           p0 = {x: (e.touches[1].clientX + e.touches[0].clientX) / 2,
                 y: (e.touches[1].clientY + e.touches[0].clientY) / 2};
 
-          zoom0 = document.querySelector(pinchTarget).style.zoom;
+          zoom0 = document.querySelector("#" + mycanvas).style.zoom;
 
           scroll0 = {l: $(scrollTarget).css("left").slice(0, -2),
                      t: $(scrollTarget).css("top").slice(0, -2)};
@@ -134,7 +192,8 @@ function customZoomMove(e) {
 
 
            var zoom1 = Math.min(Math.max(d1 / d0 * zoom0, 0.5), 3.0);
-          document.querySelector(pinchTarget).style.zoom = zoom1;
+
+          document.querySelector("#" + mycanvas).style.zoom = zoom1;
 
           var scroll1 = {l: -(zoom1 / zoom0 * (p0.x - scroll0.l) - p1.x),
                          t: -(zoom1 / zoom0 * (p0.y - scroll0.t) - p1.y)};
@@ -216,7 +275,7 @@ function moveCursor(uid, clientPos) {
         addCursorElm(uid);
     }
 
-    var zoom = document.querySelector(pinchTarget).style.zoom;
+    var zoom = document.querySelector("#" + mycanvas).style.zoom;
 
     $('#' + cursorid).css("display", "");
     $('#' + cursorid).css("left", 
@@ -265,7 +324,7 @@ function addPaintingListener(mycanvas) {
             ev = e;
 	}
 
-        var zoom = document.querySelector(pinchTarget).style.zoom;
+        var zoom = document.querySelector("#" + mycanvas).style.zoom;
 
         mouse.x = ev.pageX - ev.target.offsetParent.offsetLeft;
         mouse.y = ev.pageY - ev.target.offsetParent.offsetTop;
@@ -290,7 +349,7 @@ function addPaintingListener(mycanvas) {
         if (mouseStroke.length < 4 || mouseStroke.length % 4) {
             sendMsg(myid + " " +
                     "point" + " " +
-                    "mycanvas" + " " +
+                    mycanvas + " " +
                     clientPos.join(" "));
         }
 
@@ -377,10 +436,10 @@ function addPaintingListener(mycanvas) {
 
 (function () {
     $(document).ready(function () {
-      addPaintingListener('mycanvas');
+            addPaintingListener(mycanvas);
 
-      addCustomZoom('mycanvas');
-      //// test
-	document.querySelector(pinchTarget).style.zoom = 1;
+            addCustomZoom(mycanvas);
+            //// test
+            document.querySelector("#" + mycanvas).style.zoom = 1;
     });
 })();
