@@ -240,7 +240,9 @@ $(function() {
     });
 
     room.on('peerJoin', peerId => {
+      console.log("peerJoin: " + peerId);
       messages.append('<div><span class="peer">' + peerId + '</span>: has joined the room </div>');
+      sendCanvasAsImage();
     });
 
     room.on('peerLeave', peerId => {
