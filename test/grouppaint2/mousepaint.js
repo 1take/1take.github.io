@@ -29,6 +29,8 @@ function executeMsg(msg) {
         clear(uid, target, m);
     } else if (cmd == "create") {
         create(uid, target);
+    } else if (cmd == "sync") {
+        sync(uid, target, m[0]);
     }
 }
 
@@ -283,6 +285,40 @@ function moveCursor(uid, clientPos) {
     $('#' + cursorid).css("top", 
                           Number(clientPos[1]) * zoom);
 
+}
+
+function encodeBase64(canvas) {
+    var base64 = $("#" + canvas)[0].toDataURL('image/png');
+    return base64;
+}
+
+function decodeBase64(target, base64) {
+    var canvas = document.getElementById(target);
+    if (!canvas) {
+        var canvasid = createNewCanvas(target);
+        canvas = document.getElementById(canvasid);
+    }
+    var ctx = canvas.getContext("2d");
+    var image = new Image();
+    image.onload = function(){
+        ctx.drawImage(image, 0, 0);
+    }
+    image.src  = base64;
+}
+
+function sync(uid, target, base64) {
+    decodeBase64(target, base64);
+}
+
+function sendCanvasAsImage() {
+    var c = $(".canvas");
+    for (i = 0; i < c.length; i++) {
+        var base64 = encodeBase64(c[i].id);
+        sendMsg(myid + " " +
+                "sync" + " " +
+                c[i].id + " " +
+                base64);
+    }
 }
 
 function addPaintingListener(mycanvas) {

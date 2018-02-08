@@ -163,6 +163,11 @@ $(function() {
     changeCanvasFocus(-1);
   });
 
+  $('#sync').on('click', e => {
+    e.preventDefault();
+    sendCanvasAsImage();
+  });
+
   // Show browser version
   $('#browsers').text(navigator.userAgent);
 
