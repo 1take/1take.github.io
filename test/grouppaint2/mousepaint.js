@@ -70,6 +70,11 @@ function setupCanvas(canvas) {
     canvas.classList.add("unfocus");
     setCanvasSize(canvas);
 
+    // fill with white
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle="white";
+    ctx.fillRect(0,0,BOARD_WIDTH,BOARD_HEIGHT);
+
     addPaintingListener(canvas.id);
     addCustomZoom(canvas.id);
     document.querySelector("#" + canvas.id).style.zoom = 1;
@@ -150,7 +155,10 @@ function drawStroke(cmd, ctx, points, w_ratio, h_ratio) {
 function clearCanvas(target) {
     var c = getContext(target);
 
-    c.ctx.clearRect(0, 0, c.canvas.width, c.canvas.height);
+    c.ctx.fillStyle="white";
+    c.ctx.fillRect(0,0,BOARD_WIDTH,BOARD_HEIGHT);
+
+    //c.ctx.clearRect(0, 0, c.canvas.width, c.canvas.height);
 }
 
 var pinching = false;
@@ -237,7 +245,7 @@ function drawWithPen(ctx, prev, cur) {
     ctx.lineWidth = PEN_WIDTH;
     ctx.moveTo(prev.x, prev.y);
     ctx.lineTo(cur.x, cur.y);
-    // ctx.strokeStyle = mouse.color;
+    // ctx.strokeStyle = "green";
     ctx.stroke();
 }
 
@@ -470,12 +478,9 @@ function addPaintingListener(mycanvas) {
     });
 }
 
-(function () {
-    $(document).ready(function () {
-            addPaintingListener(mycanvas);
-
-            addCustomZoom(mycanvas);
-            //// test
-            document.querySelector("#" + mycanvas).style.zoom = 1;
-    });
-})();
+window.onload = function() {
+  mycanvas = createNewCanvas();
+  var canvas = $("#"+mycanvas)[0]; 
+  canvas.classList.remove("unfocus");
+  canvas.classList.add("focus");
+};

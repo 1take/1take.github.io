@@ -12,11 +12,11 @@ function setCanvasSize(canvas) {
     canvas.width = BOARD_WIDTH;
 }
 
-function resizeCanvas() {
-    var canvas = document.getElementById(mycanvas);
-    setCanvasSize(canvas);
-    console.log("canvas size: " + canvas.height + ", " + canvas.width);
-}
+//function resizeCanvas() {
+//    var canvas = document.getElementById(mycanvas);
+//    setCanvasSize(canvas);
+//    console.log("canvas size: " + canvas.height + ", " + canvas.width);
+//}
 
 $(function() {
   var action_button_num = 6.0;
@@ -27,7 +27,7 @@ $(function() {
 
   function sizing() {
 
-      resizeCanvas();
+      //    resizeCanvas();
 
     // (3px (border) + 10px(padding)) * 2
     var margin = 13;

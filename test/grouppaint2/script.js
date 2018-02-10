@@ -146,6 +146,21 @@ $(function() {
     clearCanvas(mycanvas);
   });
 
+  $('#pdf').on('click', e => {
+    // only jpeg is supported by jsPDF
+    var px2mm = 0.1;
+    var w = BOARD_WIDTH * px2mm, h = BOARD_HEIGHT * px2mm;
+    var pdf = new jsPDF('', 'mm', [w, h]);
+    var c = $(".canvas");
+    for (i = 0; i < c.length; i++) {
+         if (i > 0) pdf.addPage();
+         var canvas = c[i];
+         var imgData = canvas.toDataURL("image/jpeg", 1.0);
+         pdf.addImage(imgData, 'JPEG', 0, 0, w, h);
+    }
+    pdf.save("canvas_download.pdf");
+  });
+
   $('#go').on('click', e => {
     e.preventDefault();
 
