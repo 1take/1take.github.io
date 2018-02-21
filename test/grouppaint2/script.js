@@ -91,12 +91,13 @@ $(function() {
   function doConnect() {
     var roomName = $('#roomName').val();
     if (!roomName) {
-      roonName = "LUP_SHAREDRAW";
+      var arr = location.href.split("/");
+      roomName = arr[arr.length - 2];
       // return;
     }
     if (!connectedPeers[roomName]) {
       // Create 2 connections, one labelled chat and another labelled file.
-      const room = peer.joinRoom('sfu_text_' + roomName, {mode: 'sfu'});
+      const room = peer.joinRoom(roomName, {mode: 'sfu'});
       room.on('open', function() {
         connect(room);
         connectedPeers[roomName] = room;
