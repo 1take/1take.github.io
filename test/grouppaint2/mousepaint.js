@@ -245,19 +245,21 @@ function drawWithPen(ctx, prev, cur) {
     ctx.lineWidth = PEN_WIDTH;
     ctx.moveTo(prev.x, prev.y);
     ctx.lineTo(cur.x, cur.y);
-    // ctx.strokeStyle = "green";
+    ctx.strokeStyle = "black";
     ctx.stroke();
 }
 
 function drawWithEraser(ctx, prev, cur) {
     ctx.beginPath();
-    ctx.globalCompositeOperation = "destination-out";
+    ctx.globalCompositeOperation = "source-over";
+    //ctx.globalCompositeOperation = "destination-out";
     // ctx.arc(curX, curY, ERASER_WIDTH, 0, Math.PI*2, false);
     // ctx.fill();
     ctx.lineWidth = ERASER_WIDTH;
     ctx.moveTo(prev.x, prev.y);
     ctx.lineTo(cur.x, cur.y);
-    // ctx.strokeStyle = mouse.color;
+    if (ctx.globalCompositeOperation == "source-over")
+      ctx.strokeStyle = "white";
     ctx.stroke();
 }
 
