@@ -1,3 +1,5 @@
+var page_number;
+
 // var BOARD_WIDTH_BASE = 1280;
 // var BOARD_HEIGHT_BASE = 960;
 var BOARD_WIDTH_BASE = 960;
@@ -35,5 +37,13 @@ $(function() {
     $(".action_button").attr("height", action.offsetHeight - margin);
     $(".action_button").css("-webkit-border-radius", (action.offsetHeight) / 2.0);
   }
+
+  page_number = new Vue({
+          el: "#page_number",
+          data: {
+              cur: 0,
+              max: 0
+          }
+      });
 
 });

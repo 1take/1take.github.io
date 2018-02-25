@@ -86,6 +86,7 @@ function createCanvas(target) {
     document.getElementById('mycanvasdiv').appendChild(canvas);
     setupCanvas(canvas);
 
+    page_number.max++;
     Vue.toasted.show('New Page Created !!');
 }
 
@@ -105,17 +106,22 @@ function getNumOfCanvas() {
 
 function changeCanvasFocus(i) {
     var curi =
-        Number(mycanvas.slice(mycanvas.length - 1));
+        Number(mycanvas.slice("mycanvas".length));
     var newi = Math.max(0, Math.min(curi + i, getNumOfCanvas() - 1));
 
     var newfocus = "mycanvas" + newi;
+    // console.log(mycanvas + " " + newfocus);
 
     if (mycanvas != newfocus) {
-        mycanvas = newfocus;
 
         $("canvas").addClass("unfocus");
+        $("#" + mycanvas).removeClass("focus");
+
+        mycanvas = newfocus;
         $("#" + mycanvas).removeClass("unfocus");
         $("#" + mycanvas).addClass("focus");
+        
+        page_number.cur = newi + 1;
 
         return true;
     } else {
@@ -487,4 +493,5 @@ window.onload = function() {
   var canvas = $("#"+mycanvas)[0]; 
   canvas.classList.remove("unfocus");
   canvas.classList.add("focus");
+  page_number.cur = 1;
 };
