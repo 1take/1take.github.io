@@ -22,6 +22,11 @@
 }
 .status_button {
   width: 47px;
+  height: 47px;
+}
+
+#pdf {
+  height: 70%;
 }
 
 img.cursor {
@@ -57,9 +62,19 @@ img.cursor {
   position: absolute;
 }
 
+div#page_number {
+  position: absolute;
+  bottom: 45px;
+  font-size: 40px;
+  color: #757575;
+  font-family: arial, sans-serif;
+  width: 100%;
+  text-align: center;
+  pointer-events: none;
+}
+
 .canvas {
-  border: 10px solid #CCC;
-  background-color: #000;
+  border: 10px solid #626262;
 }
 
 body {
@@ -70,8 +85,8 @@ body {
   color: #444;
   font-size: 15px;
   line-height: 18px;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.4);
-  background-color: #CCC
+  //text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+  background-color: #626262;
 }
 * html body{
     overflow: hidden;
@@ -106,12 +121,12 @@ h1 {
   color: #999;
   font-style: italic;
 }
-#wrap {
-  background-color: #ddd;
-  border-width: 1px 0;
-  border-color: #ccc;
-  border-style: solid;
-}
+//#wrap {
+//  background-color: #ddd;
+//  border-width: 1px 0;
+//  border-color: #ccc;
+//  border-style: solid;
+//}
 .clear {
   clear: both;
 }
