@@ -1,3 +1,9 @@
+//import Toasted from 'vue-toasted';
+var toastOpt =
+{position: "bottom-right",
+ duration: 2000};
+Vue.use(Toasted, toastOpt)
+
 window.__SKYWAY_KEY__ = '44eecc33-4adb-4e87-a4a1-cd7aa03ff9e2';
 
 // Connect to SkyWay, have server assign an ID instead of providing one
@@ -163,6 +169,7 @@ $(function() {
   });
 
   $('#go').on('click', e => {
+
     e.preventDefault();
 
     if (!changeCanvasFocus(1)) {

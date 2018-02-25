@@ -85,6 +85,8 @@ function createCanvas(target) {
     canvas.id = target;
     document.getElementById('mycanvasdiv').appendChild(canvas);
     setupCanvas(canvas);
+
+    Vue.toasted.show('New Page Created !!');
 }
 
 function getNewCanvasId() {
