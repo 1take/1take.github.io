@@ -38,12 +38,4 @@ $(function() {
     $(".action_button").css("-webkit-border-radius", (action.offsetHeight) / 2.0);
   }
 
-  page_number = new Vue({
-          el: "#page_number",
-          data: {
-              cur: 0,
-              max: 0
-          }
-      });
-
 });

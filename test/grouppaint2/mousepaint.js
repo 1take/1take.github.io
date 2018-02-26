@@ -489,6 +489,15 @@ function addPaintingListener(mycanvas) {
 }
 
 window.onload = function() {
+
+  page_number = new Vue({
+          el: "#page_number",
+          data: {
+              cur: 0,
+              max: 0
+          }
+      });
+
   mycanvas = createNewCanvas();
   var canvas = $("#"+mycanvas)[0]; 
   canvas.classList.remove("unfocus");
