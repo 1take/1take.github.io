@@ -64,17 +64,22 @@ img.cursor {
 
 div#page_number {
   position: absolute;
-  bottom: 45px;
-  font-size: 35px;
-  color: #757575;
+  bottom: 30px;
+  font-size: 30px;
+  color: #9E9E9E;
   font-family: arial, sans-serif;
   width: 100%;
   text-align: center;
   pointer-events: none;
+  z-index: 3;
 }
 
 .canvas {
-  border: 10px solid #626262;
+  //border: 10px solid #BDBDBD;
+  box-shadow: 1px 1px 4px gray;
+  left: 10px;
+  top: 10px;
+  position: relative;
 }
 
 body {
@@ -86,7 +91,7 @@ body {
   font-size: 15px;
   line-height: 18px;
   //text-shadow: 0 1px 0 rgba(255,255,255,0.4);
-  background-color: #626262;
+  background-color: #BDBDBD;
 }
 * html body{
     overflow: hidden;
