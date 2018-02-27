@@ -3,7 +3,7 @@ mouseStroke = [];
 
 var DESTINATION_OUT = false;
 var PEN_WIDTH = 5;
-var ERASER_WIDTH = 80;
+var ERASER_WIDTH = 70;
 
 var mycanvas = 'mycanvas0';
 
@@ -247,11 +247,11 @@ document.getElementById(target).addEventListener("touchend", function (e) {
 function drawWithPen(ctx, prev, cur) {
     ctx.beginPath();
     ctx.globalCompositeOperation = "source-over";
-    // ctx.arc(curX, curY, PEN_WIDTH, 0, Math.PI*2, false);
-    // ctx.fill();
     ctx.lineWidth = PEN_WIDTH;
     ctx.moveTo(prev.x, prev.y);
     ctx.lineTo(cur.x, cur.y);
+    //ctx.arc(cur.x, cur.y, PEN_WIDTH / 2, 0, Math.PI*2, false);
+    //ctx.fill();
     ctx.strokeStyle = "black";
     ctx.stroke();
 }
@@ -260,11 +260,11 @@ function drawWithEraser(ctx, prev, cur) {
     ctx.beginPath();
     ctx.globalCompositeOperation = "source-over";
     //ctx.globalCompositeOperation = "destination-out";
-    // ctx.arc(curX, curY, ERASER_WIDTH, 0, Math.PI*2, false);
-    // ctx.fill();
     ctx.lineWidth = ERASER_WIDTH;
     ctx.moveTo(prev.x, prev.y);
     ctx.lineTo(cur.x, cur.y);
+    ctx.arc(cur.x, cur.y, ERASER_WIDTH / 2, 0, Math.PI*2, false);
+    ctx.fill();
     if (ctx.globalCompositeOperation == "source-over")
       ctx.strokeStyle = "white";
     ctx.stroke();
