@@ -397,6 +397,13 @@ function addPaintingListener(mycanvas) {
                          ev.clientY - $(scrollTarget).css("top").slice(0, -2)];
         clientPos[0] /= zoom;
         clientPos[1] /= zoom;
+
+        p = convertPointFromPageToNode(ev.target, ev.pageX, ev.pageY);
+        mouse.x = p.x;
+        mouse.y = p.y;
+        clientPos[0] = p.x;
+        clientPos[1] = p.y;
+
         if (!isDrawEnable) // show local cursor when pointing mode
             moveCursor(myid, clientPos);
         if (mouseStroke.length < 4 || mouseStroke.length % 4) {
