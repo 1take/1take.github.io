@@ -28,8 +28,11 @@
         </v-toolbar>
         <v-content  class="grey lighten-3">
           <v-container>
-            <div>
-              <canvas width="960" height="1280"></canvas>
+            <div class="text-xs-center">
+              <canvas width="760" height="1080" style="background-color: white"></canvas>
+            </div>
+            <div class="text-xs-center">
+              <v-pagination :length="page.max" :value="page.cur" :total-visible="7" circle></v-pagination>
             </div>
           </v-container>
         </v-content>
@@ -39,7 +42,22 @@
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vuetify/dist/vuetify.js"></script>
     <script>
-      new Vue({ el: '#app' })
+      var app = new Vue({ 
+        el: '#app',
+        data: {
+          page: {
+            cur: 7,
+            max: 100
+          }
+        }
+      });
+      app.$vuetify.theme = {
+          primary: '#000000',
+          secondary: '#b0bec5',
+          accent: '#8c9eff',
+          error: '#b71c1c'
+      };
+
     </script>
   </body>
 </html>

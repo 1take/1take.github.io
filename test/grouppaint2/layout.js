@@ -39,3 +39,30 @@ $(function() {
   }
 
 });
+
+$(window).bind('orientationchange resize', function(event){
+//$(window).bind('resize', function(event){
+        //if (window.orientation == 90 || window.orientation == -90) {
+        //            if (event.orientation == 'landscape') {
+                var c = $('#' + mycanvas);
+                rotate(c, -window.orientation);
+
+                //            }
+                //}
+    });
+
+function rotate(el, degs) {
+    iedegs = degs/90;
+    if (iedegs < 0) iedegs += 4;
+    transform = 'rotate('+degs+'deg)';
+    iefilter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation='+iedegs+')';
+    styles = {
+        transform: transform,
+        '-webkit-transform': transform,
+        '-moz-transform': transform,
+        '-o-transform': transform,
+        filter: iefilter,
+        '-ms-filter': iefilter
+    };
+    $(el).css(styles);
+}

@@ -1,3 +1,7 @@
+.icon-gray {
+  color: #75758E;
+}
+
 #actions {
   position: fixed !important;
   position: absolute;
@@ -34,6 +38,14 @@ img.cursor {
   pointer-events: none;
   width: 35px;
   height: 35px;
+}
+
+.rotate10 {
+    -moz-transform: rotate(10deg);
+    -webkit-transform: rotate(10deg);
+    -o-transform: rotate(10deg);
+    -ms-transform: rotate(10deg);
+    transform: rotate(10deg);
 }
 
 .rotate90 {
@@ -77,9 +89,10 @@ div#page_number {
 .canvas {
   //border: 10px solid #BDBDBD;
   box-shadow: 1px 1px 4px gray;
-  left: 10px;
-  top: 10px;
-  position: relative;
+  //left: 10px;
+  //top: 10px;
+  //position: relative;
+  display: flex;
 }
 
 body {
