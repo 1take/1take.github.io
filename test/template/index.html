@@ -3,12 +3,13 @@
   <head>
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
     <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
   </head>
   <body>
     <div id="app">
       <v-app>
-        <v-toolbar flat height=70>
+        <v-toolbar flat height=60>
           <v-toolbar-side-icon></v-toolbar-side-icon>
           <v-toolbar-title>Title</v-toolbar-title>
           <v-spacer></v-spacer>
@@ -26,14 +27,11 @@
             <v-icon>more_vert</v-icon>
           </v-btn>
         </v-toolbar>
-        <v-content  class="grey lighten-3">
-          <v-container>
-            <div class="text-xs-center">
-              <canvas width="760" height="1080" style="background-color: white"></canvas>
-            </div>
-            <div class="text-xs-center">
-              <v-pagination :length="page.max" :value="page.cur" :total-visible="7" circle></v-pagination>
-            </div>
+        <v-content class="grey lighten-3">
+          <v-container fluid align-content-center>
+            <v-layout align-center justify-center>
+              <canvas class="text-xs-center" width="960" height="1280" style="background-color: white; transform: scale(1)"></canvas>
+            </v-layout>
           </v-container>
         </v-content>
       </v-app>
