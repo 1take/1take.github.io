@@ -11,8 +11,9 @@
   top: 0;
   left: 0;
   //background-color: #5bc;
-  //background-color: #FFFFFF;
+  background-color: #AFAFAF;
   z-index:2;
+  box-shadow: 1px 1px 4px gray;
 }
 #status {
   position: fixed !important;
@@ -27,6 +28,9 @@
 .status_button {
   width: 47px;
   height: 47px;
+}
+.action_button {
+  font-size: 47px;
 }
 
 #pdf {
