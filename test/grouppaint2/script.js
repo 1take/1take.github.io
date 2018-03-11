@@ -206,7 +206,9 @@ $(function() {
     // Handle a chat connection.
     //$('#text').focus();
 
-    $('#connect').attr("src", "../../asset/connect_on.bmp");
+    //$('#connect').attr("src", "../../asset/connect_on.bmp");
+    $('#connecticon').text("people");
+    $('#num_member').text("with yours");
     changeIconHue(myid, 'connect');
 
     const chatbox = $('<div></div>').addClass('connection').addClass('active').attr('id', room.name);

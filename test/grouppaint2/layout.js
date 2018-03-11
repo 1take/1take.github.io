@@ -32,7 +32,7 @@ $(function() {
       //    resizeCanvas();
 
     // (3px (border) + 10px(padding)) * 2
-    var margin = 13;
+      var margin = 23;
     $(".action_button").attr("width", action.offsetHeight - margin);
     $(".action_button").attr("height", action.offsetHeight - margin);
     $(".action_button").css("-webkit-border-radius", (action.offsetHeight) / 2.0);

@@ -6,15 +6,94 @@
   position: fixed !important;
   position: absolute;
   width: 100%;
-  height: 60px;
+  height: 85px;
   text-align: center;
   top: 0;
   left: 0;
   //background-color: #5bc;
-  background-color: #AFAFAF;
+  //background-color: #AFAFAF;
+  //background-color: #FFD54F;
+  background-color: #FFD54F;
   z-index:2;
   box-shadow: 1px 1px 4px gray;
 }
+
+.font_yellow {
+  color: #ffeb3b;
+}
+.font_white {
+  color: #EEEEEE;
+}
+.font_black {
+// color: #212121;
+//  color: #455A64;
+//  color: #616161;
+  color: #424242;
+}
+.font_20px {
+  font-size: 20px;
+}
+.logo {
+  font-size: 47px;
+  display: flex;
+;;  font-family: 'Satisfy', cursive;
+  font-family: 'Indie Flower', cursive;
+;;  vertical-align: middle;
+;;  justify-content: center;
+;;  align-items: center;
+}
+
+.middle_left {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translateY(-50%) translateX(0%);
+  -webkit-transform: translateY(-50%) translateX(0%);
+}
+
+.bottom_left {
+  display: flex;
+  position: absolute;
+  top: 100%;
+  left: 0%;
+  transform: translateY(-100%) translateX(0%);
+  -webkit-transform: translateY(-100%) translateX(0%);
+}
+.middle_center {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  -webkit-transform: translateY(-50%) translateX(-50%);
+}
+.middle_right {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%) translateX(-100%);
+  -webkit-transform: translateY(-50%) translateX(-100%);
+}
+.middle_left2 {
+  display: flex;
+  position: absolute;
+  top: 45%;
+  left: 0%;
+  transform: translateY(-0%) translateX(0%);
+  -webkit-transform: translateY(-0%) translateX(0%);
+}
+.middle_right2 {
+  display: flex;
+  position: absolute;
+  top: 45%;
+  left: 98%;
+  transform: translateY(-0%) translateX(-100%);
+  -webkit-transform: translateY(-0%) translateX(-100%);
+}
+
+
 #status {
   position: fixed !important;
   position: absolute;
@@ -31,6 +110,11 @@
 }
 .action_button {
   font-size: 47px;
+}
+
+.page_button {
+  width: 47px;
+  height: 47px;
 }
 
 #pdf {
@@ -92,11 +176,15 @@ div#page_number {
 
 .canvas {
   //border: 10px solid #BDBDBD;
-  box-shadow: 1px 1px 4px gray;
+  //box-shadow: 1px 1px 4px gray;
   //left: 10px;
   //top: 10px;
   //position: relative;
   display: flex;
+}
+
+.button_shadow {
+  box-shadow: 1px 1px 1px gray;
 }
 
 body {
@@ -108,7 +196,7 @@ body {
   font-size: 15px;
   line-height: 18px;
   //text-shadow: 0 1px 0 rgba(255,255,255,0.4);
-  background-color: #BDBDBD;
+  background-color: #E0E0E0;
 }
 * html body{
     overflow: hidden;
