@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Materiallize Sample</title>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+
+    <!--link rel="manifest" href="./manifest.json">
+    <link href="../../css/MaterialDesign-Webfont-master/css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css" /-->
+
+    <link href="style.css" rel="stylesheet" type="text/css">
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
+  </head>
+  <body>
+
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-toasted"></script>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
+    <script type="text/javascript" src="../../skyway.min.js"></script>
+    <script type="text/javascript" src="../../pointCoordinate/convertPointFromPageToNode.js"></script>
+    <script type="text/javascript" src="mousepaint.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript" src="layout.js"></script>
+
+    <header>
+      <nav class="grey darken" role="navigation">
+        <!-- nav-wrapperを指定する -->
+        <div class="nav-wrapper container">
+          <a id="logo-container" href="#index-banner" class="left brand-logo text-white">
+            <i id="connecticon" class="material-icons" style="color: yellow">person</i>
+            wima.io
+          </a>
+            <!--li><i class="button_medium material-icons">arrow_back</i></li>
+            <li><i class="button_medium material-icons">arrow_forward</i></li-->
+
+          <ul class="right hide-on-med-and-up">
+            <li><a href="#about" title="about">About Us</a></li>
+            <li><a href="#production">Production</a></li>
+            <li><a href="#links" title="links">Links</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+          </ul>
+          <!-- スマホ用ナビメニューアイコン -->
+          <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+
+          <!--div id="status">
+            <input class="status_button rotate right" id="connect" type="image" src="../../../asset/connect_off.bmp"></input>
+          </div-->
+
+          <ul class="right">
+            <li><i class="button_medium material-icons">delete</i></li>
+            <li><i class="button_medium material-icons">file_download</i></li>
+
+            <li><input class="action_button unselected" id="eraser" type="image" src="../../../asset/eraser.bmp"></input></li>
+            <li><input class="action_button unselected" id="pointer" type="image" src="../../../asset/pointer.bmp"></input></li>
+            <li><input class="action_button selected" id="pen" type="image" src="../../../asset/pen.bmp"></input></li>
+
+
+            <!--li><i id="trash" class="mdi mdi-delete mdi-48px icon-gray"></i></li>
+            <li><i id="eraser" class="mdi mdi-eraser mdi-48px icon-gray mdi-inactive"></i></li>
+            <li><i id="pointer" class="rotate180 mdi mdi-cursor-default-outline mdi-48px icon-gray mdi-inactive"></i></li>
+            <li><i id="pen" class="mdi mdi-pencil mdi-48px icon-gray"></i></li>
+            <li><i id="back" class="mdi mdi-arrow-left mdi-48px icon-gray"></i></li>
+            <li><i id="go" class="mdi mdi-arrow-right mdi-48px icon-gray"></i></li>
+            <li><i id="pdf" class="mdi mdi-download mdi-48px icon-gray"></i></li-->
+          </ul>
+            <!--input class="action_button " id="trash" type="image" src="../../../asset/trash.bmp"></input>
+            <input class="action_button unselected" id="eraser" type="image" src="../../../asset/eraser.bmp"></input>
+            <input class="action_button unselected" id="pointer" type="image" src="../../../asset/pointer.bmp"></input>
+            <input class="action_button selected" id="pen" type="image" src="../../../asset/pen.bmp"></input>
+            <input class="action_button rotate180" id="back" type="image" src="../../../asset/go.bmp"></input>
+            <input class="action_button " id="go" type="image" src="../../../asset/go.bmp"></input>
+            <input class="status_button " id="pdf" type="image" src="../../../asset/pdf.png"></input-->
+            <!--input class="action_button " id="sync" type="image" src="../../asset/redo.bmp"></button-->
+          </div>
+
+      </nav>
+    </header>
+
+    <!-- スマホ用ナビ -->
+    <ul id="nav-mobile" class="side-nav">
+      <li><a href="#about" title="about">About Us</a></li>
+      <li><a href="#production" title="production">Production</a></li>
+      <li><a href="#links" title="links">Links</a></li>
+      <li><a href="#contact" title="contact">Contact Us</a></li>
+    </ul>
+
+    <div id="mycanvasdiv">
+      <div id="page_number">{{cur}}/{{max}}</div>
+    </div>
+
+    <div style="display:none">
+      <div id="pid"></div>
+      <div id="wrap">
+        <div id="connections">
+          <span class="filler">You have not yet made any connections.</span>
+        </div>
+        <div class="clear">
+        </div>
+      </div>
+      <div id="box" style="background: #fff; font-size: 18px;padding:40px 30px; text-align: center;">
+        Drag file here to send to active connections.
+      </div>
+      <div class="warning browser">
+        <div class="important">
+          <p><strong>Warning:</strong> You may connect with people you don't know if you both use the same room name.</p>
+          <p><strong>注意：</strong>同じルーム名を使用した場合、知らない人と接続する可能性があります。</p>
+        </div>
+        <div class="log" style="color:#FF7500;text-shadow:none;padding:15px;background:#eee"><strong>Connection status</strong>:<br></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        // sideNavを利用する
+      setTimeout(1000,
+      function() {
+        $('.button-collapse').sideNav();
+      });
+      });
+    </script>
+
+  </body>
+</html>
