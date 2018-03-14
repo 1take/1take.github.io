@@ -10,14 +10,22 @@
   text-align: center;
   top: 0;
   left: 0;
+  background-color: #F8F8F8;
   //background-color: #5bc;
   //background-color: #AFAFAF;
   //background-color: #FFD54F;
-  background-color: #FFD54F;
+  //background-color: #FDD54F;
+  //background-color: #FFE082;
+  //background-color: #64B5F6;
+  //background-color: #A0CAF9;
+  //background-color: #B0BEC5;
+  //background-color: #FF4081;
   z-index:2;
-  box-shadow: 1px 1px 4px gray;
+  //box-shadow: 1px 1px 4px gray;
 }
-
+.font_logocolor {
+  color: #E0E0E0;
+}
 .font_yellow {
   color: #ffeb3b;
 }
@@ -28,16 +36,23 @@
 // color: #212121;
 //  color: #455A64;
 //  color: #616161;
-  color: #424242;
+//  color: #424242;
+  color: #5e5656;
 }
 .font_20px {
   font-size: 20px;
 }
 .logo {
-  font-size: 47px;
-  display: flex;
+  font-size: 37px;
+;;  display: flex;
 ;;  font-family: 'Satisfy', cursive;
-  font-family: 'Indie Flower', cursive;
+;;  font-family: 'Indie Flower', cursive;
+;;  font-family: 'Dancing Script', cursive;
+;;  font-family: 'Space Mono', cursive;
+;;  font-family: 'Just Another Hand', cursive;
+;;  font-family: 'Gochi Hand', cursive;
+;;  font-family: 'Croissant One', cursive;
+  font-family: 'Marmelad', cursive;
 ;;  vertical-align: middle;
 ;;  justify-content: center;
 ;;  align-items: center;
@@ -160,6 +175,7 @@ img.cursor {
   //overflow-x: scroll;
   //overflow-y: scroll;
   position: absolute;
+  box-shadow: 1px 1px 1px gray;
 }
 
 div#page_number {
@@ -196,7 +212,8 @@ body {
   font-size: 15px;
   line-height: 18px;
   //text-shadow: 0 1px 0 rgba(255,255,255,0.4);
-  background-color: #E0E0E0;
+  //background-color: #E0E0E0;
+  background-color: #F8F8F8;
 }
 * html body{
     overflow: hidden;
