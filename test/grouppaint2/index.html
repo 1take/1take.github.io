@@ -86,12 +86,13 @@
 </div>
 
 <div id="mycanvasdiv" class="middle_center">
-  <div id="page_number">{{cur}}/{{max}}</div>
-  <input class="page_button middle_left2 rotate180" 
-         id="back" type="image" src="../../asset/go.bmp"></input>
-  <input class="page_button middle_right2" 
-         id="go" type="image" src="../../asset/plus.bmp"></input>
-
+  <div id="app">
+    <div id="page_number">{{cur}}/{{max}}</div>
+    <input class="page_button middle_left2 rotate180" 
+           id="back" type="image" v-on:touchstart="back($event)" src="../../asset/go.bmp"></input>
+    <input class="page_button middle_right2" 
+           id="go" type="image" v-on:touchstart="go($event)" :src=go_icon_src></input>
+  </div>
 </div>
 
 <div style="display:none">

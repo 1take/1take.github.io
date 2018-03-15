@@ -169,6 +169,7 @@ $(function() {
   });
 
   $('#go').on('touchstart', e => {
+    console.log("touchstarted");
 
     e.preventDefault();
 

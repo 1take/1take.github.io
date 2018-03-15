@@ -86,7 +86,7 @@ function createCanvas(target) {
     document.getElementById('mycanvasdiv').appendChild(canvas);
     setupCanvas(canvas);
 
-    page_number.max++;
+    app.max++;
     Vue.toasted.show('New Page Created !!');
 }
 
@@ -121,7 +121,7 @@ function changeCanvasFocus(i) {
         $("#" + mycanvas).removeClass("unfocus");
         $("#" + mycanvas).addClass("focus");
         
-        page_number.cur = newi + 1;
+        app.cur = newi + 1;
 
         return true;
     } else {
@@ -496,11 +496,39 @@ function addPaintingListener(mycanvas) {
 
 window.onload = function() {
 
-  page_number = new Vue({
-          el: "#page_number",
+  app = new Vue({
+          el: "#app",
           data: {
               cur: 0,
               max: 0
+          },
+          computed: {
+              go_icon_src: function () {
+                  var base = "../../asset/";
+                  if (this.cur == this.max)
+                      return base + "plus.bmp";
+                  else
+                      return base + "go.bmp";
+              }
+          },
+          methods: {
+              go: function(e) {
+                  console.log("touchstarted");
+
+                  e.preventDefault();
+
+                  if (!changeCanvasFocus(1)) {
+                      var newcanvas = createNewCanvas();
+                      msg = myid + " " + "create" +  " " + newcanvas;
+                      sendMsg(msg);
+
+                      changeCanvasFocus(1); 
+                  }
+              },
+              back: function(e) {
+                  e.preventDefault();
+                  changeCanvasFocus(-1);
+              }
           }
       });
 
@@ -508,5 +536,5 @@ window.onload = function() {
   var canvas = $("#"+mycanvas)[0]; 
   canvas.classList.remove("unfocus");
   canvas.classList.add("focus");
-  page_number.cur = 1;
+  app.cur = 1;
 };
