@@ -123,29 +123,29 @@ $(function() {
     // $('#text').focus();
   });
 
-  $('#pen').on('click', e => {
-    console.log("clicked");
+  $('#pen').on('touchstart', e => {
+    console.log("touchstarted");
     e.preventDefault();
     DESTINATION_OUT = false;
     isDrawEnable = true;
     changeButtonSelected(e);
   });
 
-  $('#pointer').on('click', e => {
-    console.log("clicked");
+  $('#pointer').on('touchstart', e => {
+    console.log("touchstarted");
     e.preventDefault();
     isDrawEnable = false;
     changeButtonSelected(e);
   });
 
-  $('#eraser').on('click', e => {
+  $('#eraser').on('touchstart', e => {
     e.preventDefault();
     DESTINATION_OUT = true;
     isDrawEnable = true;
     changeButtonSelected(e);
   });
 
-  $('#trash').on('click', e => {
+  $('#trash').on('touchstart', e => {
     e.preventDefault();
 
     msg = myid + " " + "clear" +  " " + mycanvas;
@@ -153,7 +153,7 @@ $(function() {
     clearCanvas(mycanvas);
   });
 
-  $('#pdf').on('click', e => {
+  $('#pdf').on('touchstart', e => {
     // only jpeg is supported by jsPDF
     var px2mm = 0.1;
     var w = BOARD_WIDTH * px2mm, h = BOARD_HEIGHT * px2mm;
@@ -168,7 +168,7 @@ $(function() {
     pdf.save("canvas_download.pdf");
   });
 
-  $('#go').on('click', e => {
+  $('#go').on('touchstart', e => {
 
     e.preventDefault();
 
@@ -181,12 +181,12 @@ $(function() {
     }
   });
 
-  $('#back').on('click', e => {
+  $('#back').on('touchstart', e => {
     e.preventDefault();
     changeCanvasFocus(-1);
   });
 
-  $('#sync').on('click', e => {
+  $('#sync').on('touchstart', e => {
     e.preventDefault();
     sendCanvasAsImage();
   });
