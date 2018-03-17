@@ -87,10 +87,10 @@
 
 <div id="mycanvasdiv" class="middle_center">
   <div id="app">
-    <div id="page_number">{{cur}}/{{max}}</div>
-    <input class="page_button middle_left2 rotate180" 
+    <div id="page_number" class="z3">{{cur}}/{{max}}</div>
+    <input class="page_button middle_left2 rotate180 z3" 
            id="back" type="image" v-on:touchstart="back($event)" src="../../asset/go.bmp"></input>
-    <input class="page_button middle_right2" 
+    <input class="page_button middle_right2 z3" 
            id="go" type="image" v-on:touchstart="go($event)" :src=go_icon_src></input>
   </div>
 </div>

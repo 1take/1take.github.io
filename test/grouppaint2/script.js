@@ -168,24 +168,6 @@ $(function() {
     pdf.save("canvas_download.pdf");
   });
 
-  $('#go').on('touchstart', e => {
-    console.log("touchstarted");
-
-    e.preventDefault();
-
-    if (!changeCanvasFocus(1)) {
-        var newcanvas = createNewCanvas();
-        msg = myid + " " + "create" +  " " + newcanvas;
-        sendMsg(msg);
-
-        changeCanvasFocus(1)        
-    }
-  });
-
-  $('#back').on('touchstart', e => {
-    e.preventDefault();
-    changeCanvasFocus(-1);
-  });
 
   $('#sync').on('touchstart', e => {
     e.preventDefault();

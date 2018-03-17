@@ -194,6 +194,9 @@ div#page_number {
   width: 100%;
   text-align: center;
   pointer-events: none;
+}
+
+.z3 {
   z-index: 3;
 }
 
