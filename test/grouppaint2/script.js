@@ -169,6 +169,8 @@ $(function() {
   });
 
   $('#pdf').on('touchstart', e => {
+    e.preventDefault();      
+
     // only jpeg is supported by jsPDF
     var px2mm = 0.1;
     var w = BOARD_WIDTH * px2mm, h = BOARD_HEIGHT * px2mm;
