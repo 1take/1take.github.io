@@ -72,7 +72,18 @@ $(function() {
   });
   // Await connections from others
   peer.on('connection', connect);
-  peer.on('error', err => console.log(err));
+  peer.on('disconneted', id => {
+          console.log(err)
+          window.alert("peer.on disconneted: " + id);
+      });
+  peer.on('close', id => {
+          console.log(err)
+          window.alert("Please Reload Browser (peer.on closed: " + id + ")");
+      });
+  peer.on('error', err => {
+          console.log(err)
+          window.alert("Please Reload Browser (peer.on error -  " + err + ")");
+      });
 
   // Prepare file drop box.
   const box = $('#box');
@@ -108,6 +119,10 @@ $(function() {
         connect(room);
         connectedPeers[roomName] = room;
       });
+      room.on('close', function() {
+        window.alert("Please Reload Browser (room.on close)");
+      });
+
     }
   }
 
@@ -267,6 +282,14 @@ function sendMsg(msg) {
       + '</div>');
   });
 }
+
+function sendPing() {
+  sendMsg("ping");
+}
+
+setInterval(function () {
+  sendPing();
+}, 2000);
 
 // Goes through each active peer and calls FN on its connections.
 function eachActiveRoom(fn) {
