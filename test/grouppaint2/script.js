@@ -207,8 +207,7 @@ $(function() {
     //$('#text').focus();
 
     //$('#connect').attr("src", "../../asset/connect_on.bmp");
-    $('#connecticon').text("people");
-    $('#num_member').text("with yours");
+    updateRoomMemberCount();
     changeIconHue(myid, 'connect');
 
     const chatbox = $('<div></div>').addClass('connection').addClass('active').attr('id', room.name);
@@ -264,6 +263,10 @@ $(function() {
       }
     });
 
+    room.on('log', log => {
+            console.log(log);
+    });
+
     room.on('peerJoin', peerId => {
       console.log("peerJoin: " + peerId);
       messages.append('<div><span class="peer">' + peerId + '</span>: has joined the room </div>');
@@ -285,13 +288,35 @@ function sendMsg(msg) {
   });
 }
 
+function getLog() {
+  eachActiveRoom((room, $c) => {
+    room.getLog();
+  });
+}
+
 function sendPing() {
   sendMsg("ping");
 }
 
+function updateRoomMemberCount() {
+    peer.listAllPeers(peers => {
+            console.log(peers);
+            appstatus.num_member = peers.length;
+            if (appstatus.num_member == 0) {
+                $('#connecticon').text("sync_problem");
+            }
+            else if (appstatus.num_member == 1) {
+                $('#connecticon').text("sync");
+            } else if (appstatus.num_member > 1) {
+                $('#connecticon').text("people");
+            }
+        });
+}
+
 setInterval(function () {
   sendPing();
-}, 2000);
+  updateRoomMemberCount();
+}, 4000);
 
 // Goes through each active peer and calls FN on its connections.
 function eachActiveRoom(fn) {

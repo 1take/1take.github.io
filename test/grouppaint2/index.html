@@ -50,9 +50,9 @@
 </head>
 
 <body>
-<div id="status">
+<!--div id="status">
   <input class="status_button rotate left" id="connect" type="image" src="../../asset/connect_off.bmp"></button>
-</div>
+</div-->
 <div id="actions">
   <div id="logo" class="middle_left logo font_black">
     <!--i id="menu" class="action_button material-icons">menu</i>
@@ -73,8 +73,11 @@
     &ensp;&ensp;
     <i id="pdf" class="action_button material-icons">file_download</i>
     &ensp;&ensp;&ensp;&ensp;
-    <i id="connecticon" class="action_button material-icons">person</i>
-    <!--div id="num_member" class="font_20px">you</div-->
+    <div id="appstatus" class="flex" 
+         v-bind:class="is_connected ? connected : disconnected">
+      <i id="connecticon" class="action_button material-icons">sync_problem</i>
+      <div id="num_member" class="font_20px">{{num_member}}</div>
+    </div>
     &ensp;&ensp;&ensp;&ensp;
   </div>
 

@@ -496,6 +496,20 @@ function addPaintingListener(mycanvas) {
 
 window.onload = function() {
 
+  appstatus = new Vue({
+          el: "#appstatus",
+          data: {
+              num_member: 0,
+              connected: 'font_green',
+              disconnected: 'font_red'
+          },
+          computed: {
+              is_connected: function () {
+                  return this.num_member > 0;
+              }
+          }
+      });
+
   app = new Vue({
           el: "#app",
           data: {

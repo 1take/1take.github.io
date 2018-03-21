@@ -39,6 +39,14 @@
 //  color: #424242;
   color: #5e5656;
 }
+
+.font_red {
+  color: #f44336;
+}
+.font_green {
+  color: #4CAF50;
+}
+
 .font_20px {
   font-size: 20px;
 }
@@ -56,6 +64,10 @@
 ;;  vertical-align: middle;
 ;;  justify-content: center;
 ;;  align-items: center;
+}
+
+.flex {
+  display: flex;
 }
 
 .middle_left {
