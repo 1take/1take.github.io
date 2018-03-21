@@ -502,6 +502,9 @@ function addPaintingListener(mycanvas) {
 }
 
 window.onload = function() {
+ Vue.component('modal', {
+         template: '#modal-template'
+     });
 
   appstatus = new Vue({
           el: "#appstatus",
@@ -529,7 +532,8 @@ window.onload = function() {
           el: "#app",
           data: {
               cur: 0,
-              max: 0
+              max: 0,
+              showModal: false
           },
           computed: {
               go_icon_src: function () {

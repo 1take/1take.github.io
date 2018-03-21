@@ -84,18 +84,21 @@ $(function() {
   peer.on('connection', connect);
   peer.on('disconneted', id => {
           console.log(err)
-          window.alert("Please Reload Browser (peer.on disconneted: " + id + ")");
+          //window.alert("Please Reload Browser (peer.on disconneted: " + id + ")");
           appstatus.num_member = 0;
+          app.showModal = true;
       });
   peer.on('close', id => {
           console.log(err)
-          window.alert("Please Reload Browser (peer.on closed: " + id + ")");
+          //window.alert("Please Reload Browser (peer.on closed: " + id + ")");
           appstatus.num_member = 0;
+          app.showModal = true;
       });
   peer.on('error', err => {
           console.log(err)
-          window.alert("Please Reload Browser (peer.on error -  " + err + ")");
+          //window.alert("Please Reload Browser (peer.on error -  " + err + ")");
           appstatus.num_member = 0;
+          app.showModal = true;
       });
 
   // Prepare file drop box.
@@ -133,8 +136,9 @@ $(function() {
         connectedPeers[roomName] = room;
       });
       room.on('close', function() {
-        window.alert("Please Reload Browser (room.on close)");
+        //window.alert("Please Reload Browser (room.on close)");
         appstatus.num_member = 0;
+        app.showModal = true;
       });
 
     }
