@@ -75,7 +75,7 @@
     &ensp;&ensp;&ensp;&ensp;
     <div id="appstatus" class="flex" 
          v-bind:class="is_connected ? connected : disconnected">
-      <i id="connecticon" class="action_button material-icons">sync_problem</i>
+      <i id="connecticon" class="action_button material-icons">{{sync_icon}}</i>
       <div id="num_member" class="font_20px">{{num_member}}</div>
     </div>
     &ensp;&ensp;&ensp;&ensp;

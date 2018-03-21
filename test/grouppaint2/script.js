@@ -74,15 +74,18 @@ $(function() {
   peer.on('connection', connect);
   peer.on('disconneted', id => {
           console.log(err)
-          window.alert("peer.on disconneted: " + id);
+          window.alert("Please Reload Browser (peer.on disconneted: " + id ")");
+          appstatus.num_member = 0;
       });
   peer.on('close', id => {
           console.log(err)
           window.alert("Please Reload Browser (peer.on closed: " + id + ")");
+          appstatus.num_member = 0;
       });
   peer.on('error', err => {
           console.log(err)
           window.alert("Please Reload Browser (peer.on error -  " + err + ")");
+          appstatus.num_member = 0;
       });
 
   // Prepare file drop box.
@@ -121,6 +124,7 @@ $(function() {
       });
       room.on('close', function() {
         window.alert("Please Reload Browser (room.on close)");
+        appstatus.num_member = 0;
       });
 
     }
@@ -300,16 +304,8 @@ function sendPing() {
 
 function updateRoomMemberCount() {
     peer.listAllPeers(peers => {
-            console.log(peers);
+            // console.log(peers);
             appstatus.num_member = peers.length;
-            if (appstatus.num_member == 0) {
-                $('#connecticon').text("sync_problem");
-            }
-            else if (appstatus.num_member == 1) {
-                $('#connecticon').text("sync");
-            } else if (appstatus.num_member > 1) {
-                $('#connecticon').text("people");
-            }
         });
 }
 

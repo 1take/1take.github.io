@@ -506,6 +506,14 @@ window.onload = function() {
           computed: {
               is_connected: function () {
                   return this.num_member > 0;
+              }, 
+              sync_icon: function () {
+                  if (this.num_member == 0)
+                      return 'sync_problem'
+                  else if (this.num_member == 1)
+                      return 'sync'
+                  else if (this.num_member > 1)
+                      return 'people'
               }
           }
       });
