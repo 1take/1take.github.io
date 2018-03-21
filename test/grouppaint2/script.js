@@ -61,6 +61,16 @@ function changeButtonSelected(ev) {
     $("#" + ev.target.id).addClass("selected");
 }
 
+function getDateString() {
+    var now = new Date();
+    var str =
+        now.getFullYear() + "" +
+        (now.getMonth() + 1) + "" +
+        now.getDate() + "" +
+        now.getHours() + ""+ now.getMinutes();
+    return str;
+}
+
 /* eslint-disable require-jsdoc */
 $(function() {
 
@@ -186,7 +196,9 @@ $(function() {
          var imgData = canvas.toDataURL("image/jpeg", 1.0);
          pdf.addImage(imgData, 'JPEG', 0, 0, w, h);
     }
-    pdf.save("canvas_download.pdf");
+    var filename = getDateString();
+    console.log(filename);
+    pdf.save("apcv.io_" + filename + ".pdf");
   });
 
 
