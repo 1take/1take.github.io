@@ -74,7 +74,7 @@ $(function() {
   peer.on('connection', connect);
   peer.on('disconneted', id => {
           console.log(err)
-          window.alert("Please Reload Browser (peer.on disconneted: " + id ")");
+          window.alert("Please Reload Browser (peer.on disconneted: " + id + ")");
           appstatus.num_member = 0;
       });
   peer.on('close', id => {
