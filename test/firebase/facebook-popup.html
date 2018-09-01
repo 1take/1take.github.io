@@ -18,7 +18,7 @@ limitations under the License.
 <head>
   <meta charset=utf-8 />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Facebook Sign In Example</title>
+  <title>Facebook Sign In Example With Popup</title>
 
   <!-- Material Design Theming -->
   <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
@@ -61,7 +61,7 @@ limitations under the License.
         var provider = new firebase.auth.FacebookAuthProvider();
         // [END createprovider]
         // [START addscopes]
-        provider.addScope('user_birthday');
+        // provider.addScope('user_birthday');
         // [END addscopes]
         // [START signin]
         firebase.auth().signInWithPopup(provider).then(function(result) {
